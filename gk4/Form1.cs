@@ -17,7 +17,6 @@ namespace gk4
             InitializeComponent();
             Api3D = new Bitmaps_intermediary(whithreboard, whitheboardBox);
             Api3D.Camera = Api3D.Create_Camera(0f, 0, 0, 0, 5, 5, 1, 200, 1);
-            MessageBox.Show( Api3D.Camera.Proj.ToString());
 
 
             Api3D.Create_New_Figure();

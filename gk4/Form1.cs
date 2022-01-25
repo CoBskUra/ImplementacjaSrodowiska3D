@@ -16,7 +16,10 @@ namespace gk4
         {
             InitializeComponent();
             Api3D = new Bitmaps_intermediary(whithreboard, whitheboardBox);
-            Api3D.Camera = Api3D.Create_Camera(0f, 0, 0, 0, 5, 5, 1, 200, 1);
+            Api3D.Camera = Api3D.Create_Camera(0, 0, 0,
+                                                0, 5, 5,
+                                                1, 200,
+                                                1);
 
 
             Api3D.Create_New_Figure();
@@ -40,9 +43,6 @@ namespace gk4
             int d = 40;
             Api3D[0].ResetRotationCenter();
             Api3D[1].ResetRotationCenter();
-            Api3D.rotate_y(i * MathF.PI / d);
-            Api3D[0].Rotation_Center = (1, 1, 1);
-            Api3D[1].Rotation_Center = (1, 1, 1);
             Api3D.rotate_y(i * MathF.PI / d);
             Api3D.drawAll();
             Api3D.Camera.lookAt = (MathF.Sin(4*i * MathF.PI / d), 5, 5);

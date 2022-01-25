@@ -8,6 +8,15 @@ using System.Threading.Tasks;
 
 namespace gk4.Shapes
 {
+    public struct float3
+     {
+        public float x, y, z;
+     }
+
+    public struct float4
+    {
+        public float x, y, z, g;
+    }
     // punkt w przestrzeni 3d
     public struct Point3
     {
@@ -18,40 +27,41 @@ namespace gk4.Shapes
                         float transform_x, float transform_y, float transform_z,
                         Camera c)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.g = g;
+            coordinates.x = x;
+            coordinates.y = y;
+            coordinates.z = z;
+            coordinates.g = g;
             max_z = mz;
             max_y = my;
             max_x = mx;
-            rad_y = 0;
-            rad_x = 0;
-            rad_z = 0;
-            center_x = transform_x;
-            center_y = transform_y;
-            center_z = transform_z;
-            rotationCenter_x = center_x;
-            rotationCenter_y = center_y;
-            rotationCenter_z = center_z;
+            rad.x = 0;
+            rad.y = 0;
+            rad.z = 0;
+            figure_center.x = transform_x;
+            figure_center.y = transform_y;
+            figure_center.z = transform_z;
+            RotationCenter.x = figure_center.x;
+            RotationCenter.y = figure_center.y;
+            RotationCenter.z = figure_center.z;
             Camera = c;
         }
 
         // wymiary przestrzeni 3d
         private int max_z, max_y, max_x;
-
-        // położenie w przestrzeni
-        private float x, y, z, g;
-
-        // rotacja o dany kąt 
-        float rad_y, rad_x, rad_z;
-
-        // środek figury 
-        private float center_x, center_y, center_z;
         
 
+        // położenie w przestrzeni
+        private float4 coordinates;
+
+        // rotacja o dany kąt 
+        private float3 rad;
+
         // środek figury 
-        private float rotationCenter_x, rotationCenter_y, rotationCenter_z;
+        private float3 figure_center;
+
+
+        // środek figury 
+        private float3 RotationCenter;
 
         // czy dany punkt znajduje się w widzialnej przestrzeni
         public bool visable => !(x_parm_on_bitmap < 0 || y_parm_on_bitmap < 0);
@@ -102,9 +112,9 @@ namespace gk4.Shapes
             var vector = this.vector;
             var M = make_rotations();
             vector = M * vector;
-            vector[0, 0] += rotationCenter_x / 2;
-            vector[1, 0] += rotationCenter_y / 2;
-            vector[2, 0] += rotationCenter_z / 2;
+            vector[0, 0] += RotationCenter.x / 2;
+            vector[1, 0] += RotationCenter.y / 2;
+            vector[2, 0] += RotationCenter.z / 2;
             vector = Camera.View * vector;
             return Camera.View * vector;
         }
@@ -114,16 +124,16 @@ namespace gk4.Shapes
         {
             set
             {
-                this.x = value.x;
-                this.y = value.y;
-                this.z = value.z;
-                center_x += value.x - this.x;
-                center_y += value.y - this.y;
-                center_z += value.z - this.z;
+                this.coordinates.x = value.x;
+                this.coordinates.y = value.y;
+                this.coordinates.z = value.z;
+                figure_center.x += value.x - this.coordinates.x;
+                figure_center.y += value.y - this.coordinates.y;
+                figure_center.z += value.z - this.coordinates.z;
             }
             get
             {
-                return (this.x, this.y, this.z);
+                return (this.coordinates.x, this.coordinates.y, this.coordinates.z);
             }
         }
 
@@ -131,13 +141,13 @@ namespace gk4.Shapes
         {
             set
             {
-                rotationCenter_x = value.x;
-                rotationCenter_y = value.y;
-                rotationCenter_z = value.z;
+                RotationCenter.x = value.x;
+                RotationCenter.y = value.y;
+                RotationCenter.z = value.z;
             }
             get
             {
-                return (rotationCenter_x, rotationCenter_y, rotationCenter_z);
+                return (RotationCenter.x, RotationCenter.y, RotationCenter.z);
             }
         }
 
@@ -146,14 +156,14 @@ namespace gk4.Shapes
         public void ResetRotationCenter()
         {
 
-            rotationCenter_x = center_x;
-            rotationCenter_y = center_y;
-            rotationCenter_z = center_z;
+            RotationCenter.x = figure_center.x;
+            RotationCenter.y = figure_center.y;
+            RotationCenter.z = figure_center.z;
         }
 
         public void Move(float x, float y, float z)
         {
-            Coordinates = (x + this.x, y + this.y, z + this.z);
+            Coordinates = (x + coordinates.x, y + coordinates.y, z + coordinates.z);
         }
        
 
@@ -161,7 +171,7 @@ namespace gk4.Shapes
 
         public static bool operator == (Point3 a, Point3 b)
         {
-            return a.x == b.x && a.y == b.y && a.z == b.z;
+            return a.coordinates.x == b.coordinates.x && a.coordinates.y == b.coordinates.y && a.coordinates.z == b.coordinates.z;
         }
 
         public static bool operator !=(Point3 a, Point3 b)
@@ -185,10 +195,10 @@ namespace gk4.Shapes
             get
             {
                 matrix<float> tmp = new matrix<float>(4, 1);
-                tmp.m[0, 0] = x - rotationCenter_x;
-                tmp.m[1, 0] = y - rotationCenter_y;
-                tmp.m[2, 0] = z - rotationCenter_z;
-                tmp.m[3, 0] = g;
+                tmp.m[0, 0] = coordinates.x - RotationCenter.x;
+                tmp.m[1, 0] = coordinates.y - RotationCenter.y;
+                tmp.m[2, 0] = coordinates.z - RotationCenter.z;
+                tmp.m[3, 0] = coordinates.g;
                 return tmp;
             }
         }
@@ -209,9 +219,9 @@ namespace gk4.Shapes
             T[3, 3] = 1;
             T[2, 3] = 4;
             matrix<float> M = P * T;
-            M.rotate_y(rad_y);
-            M.rotate_x(rad_x);
-            M.rotate_z(rad_z);
+            M.rotate_y(rad.x);
+            M.rotate_x(rad.y);
+            M.rotate_z(rad.z);
             return M;
 
         }
@@ -219,19 +229,20 @@ namespace gk4.Shapes
         // funkcje rotacji
         public void rotate_x(float rad)
         {
-            this.rad_x = rad;
-        }
-
-
-        public void rotate_z(float rad)
-        {
-            this.rad_z = rad;
+            this.rad.x = rad;
         }
 
         public void rotate_y(float rad)
         {
-            this.rad_y = rad;
+            this.rad.y = rad;
         }
+
+        public void rotate_z(float rad)
+        {
+            this.rad.z = rad;
+        }
+
+        
 
 
     }

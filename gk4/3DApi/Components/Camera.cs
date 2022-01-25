@@ -137,9 +137,9 @@ namespace gk4._3DApi.Components
             matrix<float> D = new matrix<float>(3, 1);
             D[0, 0] = position_x - lookAt_x; D[1, 0] = position_y - lookAt_y; D[2, 0] = position_z - lookAt_z;
 
-            matrix<float> R = MatrixEquations.cross_product(Uworld, D);
+            matrix<float> R = MatrixTransformationNeededTo3DModeling.cross_product(Uworld, D);
 
-            matrix<float> U = MatrixEquations.cross_product(D, R);
+            matrix<float> U = MatrixTransformationNeededTo3DModeling.cross_product(D, R);
 
             VIEW[0, 0] = R[0, 0];
             VIEW[0, 1] = R[1, 0];

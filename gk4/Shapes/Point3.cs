@@ -116,7 +116,7 @@ namespace gk4.Shapes
             vector[1, 0] += RotationCenter.y / 2;
             vector[2, 0] += RotationCenter.z / 2;
             vector = Camera.View * vector;
-            return Camera.View * vector;
+            return Camera.Proj * vector;
         }
 
 

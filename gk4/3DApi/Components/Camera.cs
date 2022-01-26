@@ -1,4 +1,5 @@
 ﻿using g4;
+using gk4.Matrix;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace gk4._3DApi.Components
         private float aspect;
         private float FOV;
         private float N, F;
+        private float3 POSITION;
+        private float3 LOOK_AT;
 
         public float n
         {
@@ -75,8 +78,36 @@ namespace gk4._3DApi.Components
             }
         }
 
-        private float position_x, position_y, position_z;
-        private float lookAt_x, lookAt_y, lookAt_z;
+        public (float x, float y, float z) Position
+        {
+            set
+            {
+                this.POSITION.x = value.x;
+                this.POSITION.y = value.y;
+                this.POSITION.z = value.z;
+
+                refreshViever();
+            }
+            get
+            {
+                return (Position.x, Position.y, Position.z);
+            }
+        }
+
+        public (float x, float y, float z) LookAt
+        {
+            set
+            {
+                this.LOOK_AT.x = value.x;
+                this.LOOK_AT.y = value.y;
+                this.LOOK_AT.z = value.z;
+
+                refreshViever();
+            }
+        }
+
+
+
 
         public Camera(float position_x, float position_y, float position_z,
                         float lookAt_x, float lookAt_y, float lookAt_z,
@@ -87,46 +118,21 @@ namespace gk4._3DApi.Components
             if (f <= n)
                 throw new Exception("Wprowadzono f mniejszą od n");
             
-            
             N = n;
             F = f;
             aspect = (float)wide / (float)hieght;
             FOV = MathF.Asin(MathF.Sin(fov - MathF.PI / 2)) + MathF.PI / 2;
 
-            this.position_x = position_x;
-            this.position_y = position_y;
-            this.position_z = position_z;
+            this.POSITION.x = position_x;
+            this.POSITION.y = position_y;
+            this.POSITION.z = position_z;
 
-            this.lookAt_x = lookAt_x;
-            this.lookAt_y = lookAt_y;
-            this.lookAt_z = lookAt_z;
+            this.LOOK_AT.x = lookAt_x;
+            this.LOOK_AT.y = lookAt_y;
+            this.LOOK_AT.z = lookAt_z;
 
             refreshViever();
             RefreshPerspective();
-        }
-
-        public (float x, float y, float z) Position
-        {
-            set
-            {
-                this.position_x = value.x;
-                this.position_y = value.y;
-                this.position_z = value.z;
-
-                refreshViever();
-            }
-        }
-
-        public (float x, float y, float z) lookAt
-        {
-            set
-            {
-                this.lookAt_x = value.x;
-                this.lookAt_y = value.y;
-                this.lookAt_z = value.z;
-
-                refreshViever();
-            }
         }
 
         private void refreshViever()
@@ -135,7 +141,7 @@ namespace gk4._3DApi.Components
             Uworld[0, 0] = 0; Uworld[1, 0] = 1; Uworld[2, 0] = 0;
 
             matrix<float> D = new matrix<float>(3, 1);
-            D[0, 0] = position_x - lookAt_x; D[1, 0] = position_y - lookAt_y; D[2, 0] = position_z - lookAt_z;
+            D[0, 0] = POSITION.x - LOOK_AT.x; D[1, 0] = POSITION.y - LOOK_AT.y; D[2, 0] = POSITION.z - LOOK_AT.z;
 
             matrix<float> R = MatrixTransformationNeededTo3DModeling.cross_product(Uworld, D);
 
@@ -159,10 +165,9 @@ namespace gk4._3DApi.Components
 
             P.ReduceToDiagonal();
 
-            P[0, 3] = -position_x;
-            P[1, 3] = -position_y;
-            P[2, 3] = -position_z;
-
+            P[0, 3] = -POSITION.x;
+            P[1, 3] = -POSITION.y;
+            P[2, 3] = -POSITION.z;
 
             VIEW = VIEW * P;
 

@@ -33,13 +33,13 @@ namespace gk4
             else
             {
                 float norma = MathF.Sqrt(
-                    MathF.Pow((dynamic)m[0, 0], 2) +
-                    MathF.Pow((dynamic)m[1, 0], 2) +
-                    MathF.Pow((dynamic)m[2, 0], 2));
+                    MathF.Pow(m[0, 0], 2) +
+                    MathF.Pow(m[1, 0], 2) +
+                    MathF.Pow(m[2, 0], 2));
 
-                m[0, 0] /= (dynamic)norma;
-                m[1, 0] /= (dynamic)norma;
-                m[2, 0] /= (dynamic)norma;
+                m[0, 0] /= norma;
+                m[1, 0] /= norma;
+                m[2, 0] /= norma;
             }
         }
 

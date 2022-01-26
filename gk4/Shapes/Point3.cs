@@ -1,5 +1,6 @@
 ﻿using g4;
 using gk4._3DApi.Components;
+using gk4.Matrix;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +9,7 @@ using System.Threading.Tasks;
 
 namespace gk4.Shapes
 {
-    public struct float3
-     {
-        public float x, y, z;
-     }
-
-    public struct float4
-    {
-        public float x, y, z, g;
-    }
+    
     // punkt w przestrzeni 3d
     public struct Point3
     {
@@ -116,13 +109,14 @@ namespace gk4.Shapes
             vector[1, 0] += RotationCenter.y / 2;
             vector[2, 0] += RotationCenter.z / 2;
             vector = Camera.View * vector;
-            return Camera.Proj * vector;
+            vector = Camera.Proj * vector;
+            return vector;
         }
 
 
-        private (float x, float y, float z) Coordinates
+        public (float x, float y, float z) Coordinates
         {
-            set
+            private set
             {
                 this.coordinates.x = value.x;
                 this.coordinates.y = value.y;

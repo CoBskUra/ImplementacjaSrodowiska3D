@@ -1,6 +1,7 @@
 ﻿using gk4.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,37 +29,40 @@ namespace gk4
 
         public void Add(Edge e)
         {
-            if (Edges.Count < 3)
-            {
-                if (!Edges.Contains(e))
-                    Edges.Add(e);
-            }
+            Edges.Add(e);
         }
 
+        internal void drawMe(Color LineColor, ref Bitmap Whitheboard)
+        {
+            drawing_lines.drawe(Edges[0], LineColor, ref Whitheboard);
+            drawing_lines.drawe(Edges[1], LineColor, ref Whitheboard);
+            drawing_lines.drawe(Edges[2], LineColor, ref Whitheboard);
+        }
 
         public void rotate_x(float rad)
         {
             foreach (var e in Edges)
+            {
                 e.rotate_x(rad);
+            }
         }
 
         public void rotate_y(float rad)
         {
             foreach (var e in Edges)
+            {
                 e.rotate_y(rad);
+            }
         }
 
         public void rotate_z(float rad)
         {
             foreach (var e in Edges)
+            {
                 e.rotate_z(rad);
+            }
         }
 
-        public void rotate(float rad)
-        {
-            foreach (var e in Edges)
-                e.rotate(rad);
-        }
 
         public (float x, float y, float z) Rotation_Center
         {
@@ -67,6 +71,10 @@ namespace gk4
 
                 foreach (var e in Edges)
                     e.Rotation_Center = value;
+            }
+            get
+            {
+                return Edges[0].Rotation_Center;
             }
         }
 

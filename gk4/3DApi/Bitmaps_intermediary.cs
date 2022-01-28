@@ -1,5 +1,6 @@
 ﻿using g4;
 using gk4._3DApi.Components;
+using gk4.Matrix;
 using gk4.Shapes;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,7 +22,7 @@ namespace gk4
         public Color DefaultLineColor = Color.FromArgb(100, 255, 100);
 
 
-        private float Transform_x = 0, Transform_y = 0, Transform_z = 0;
+        private float3 Transformation;
 
         public Camera Camera;
         
@@ -35,7 +36,7 @@ namespace gk4
         {
             WhitheboardBox = pb;
             Whitheboard = w;
-
+            Transformation = new float3();
             // ustawiami parametry widzialności
             Max_z = 100;
             Max_x = w.Width;
@@ -44,9 +45,9 @@ namespace gk4
 
         public void Transform(float x, float y, float z)
         {
-            Transform_x = -x;
-            Transform_y = -y;
-            Transform_z = -z;
+            Transformation.x = x;
+            Transformation.y = y;
+            Transformation.z = z;
         }
 
         public void setRotationCenter(int id, float x, float y, float z)
@@ -61,24 +62,23 @@ namespace gk4
             Figures[id].ResetRotationCenter();
         }
 
-
-        // tworzy point3 by za każdym razem nie pisać parametrów widzialmości
-        public Point3 create_point(int x, int y, int z)
+        public Point3 create_point(float x, float y, float z, float3 normalvector, float3 tangentialVector, float3 binormal)
         {
-
             return new Point3(
-                x + Transform_x, y + Transform_y, z + Transform_z, 1,
-                Max_x, Max_y, Max_z,
-                Transform_x, Transform_y, Transform_z, Camera
+                (x - Transformation.x, y - Transformation.y, z - Transformation.z, 1),
+                normalvector, tangentialVector, binormal,
+                Max_x, Max_y, Max_z, 
+                Transformation, Camera
                 );
         }
 
-        public Point3 create_point(float x, float y, float z)
+        public Point3 create_point(float3 point, float3 normalvector, float3 tangentialVector, float3 binormal)
         {
             return new Point3(
-                x + Transform_x, y + Transform_y, z + Transform_z, 1,
+                (point.x - Transformation.x, point.y - Transformation.y, point.z - Transformation.z, 1),
+                normalvector, tangentialVector, binormal,
                 Max_x, Max_y, Max_z,
-                Transform_x, Transform_y, Transform_z, Camera
+                Transformation, Camera
                 );
         }
 
@@ -168,40 +168,14 @@ namespace gk4
                         Figures[id].rotate_z(rad);
                 }
 
-                // wybrane figury obraca względem wszystkich osi
                 public void rotate(float rad, int id)
                 {
-                        Figures[id].rotate(rad);
+                    Figures[id].rotate(rad);
                 }
 
-                // poniższe funkcje obracają wybrane figury względem danej osi
-                public void rotate_x(float rad, params int[] id)
-                {
-                    foreach (var i in id)
-                        Figures[i].rotate_x(rad);
-                }
 
-                public void rotate_y(float rad, params int[] id)
-                {
-                    foreach (var i in id)
-                        Figures[i].rotate_y(rad);
-                }
-
-                public void rotate_z(float rad, params int[] id)
-                {
-                    foreach (var i in id)
-                        Figures[i].rotate_z(rad);
-                }
-
-                // wybrane figury obraca względem wszystkich osi
-                public void rotate(float rad, params int[] id)
-                {
-                    foreach (var i in id)
-                        Figures[i].rotate(rad);
-                }
-
-                // poniższe funkcje obracają wszystkie krawędzi względem danej osi
-                public void rotate_x(float rad)
+        // poniższe funkcje obracają wszystkie krawędzi względem danej osi
+        public void rotate_x(float rad)
                 {
                     foreach (var f in Figures)
                         f.rotate_x(rad);

@@ -18,23 +18,48 @@ namespace gk4
         {
             InitializeComponent();
             Api3D = new Bitmaps_intermediary(whithreboard, whitheboardBox);
-            Api3D.Camera = Api3D.Create_Camera(1, 1, 1,
-                                                0.2f, 0, 0,
-                                                10, 200,
-                                                2);
+            Api3D.Camera = Api3D.Create_Camera(0, -1, 7,
+                                                0, 0, 0,
+                                                10, 20,
+                                                MathF.PI/4);
 
             Api3D.Create_New_Figure();
             {
-                Api3D.Transform(0, 4, 10);
-                int i = Api3D.Sphere(3, 10, 20);
-                Api3D[i].Rotation_Center = (0f, 0f, 0);
+                //Api3D.Transform(0, 1, -10);
+                int i = Api3D.Sphere(0.1f, 5, 5);
+
             }
 
             Api3D.Create_New_Figure();
             {
-                Api3D.Transform(1, 1, -10);
-                int i = Api3D.Squer(1);
+                Api3D.Transform(0, 0, 0);
+                int i = Api3D.Squer(0.5f);
+                //Api3D[i].Rotation_Center = (-1, -1f, 0);
                 Api3D[i].LineColor = Color.White;
+            }
+
+            Api3D.Create_New_Figure();
+            {
+                Api3D.Transform(1, 1, 0);
+                int i = Api3D.Sphere(0.1f, 5, 5);
+                //Api3D[i].Rotation_Center = (-1, -1f, 0);
+                Api3D[i].LineColor = Color.White;
+            }
+
+            Api3D.Create_New_Figure();
+            {
+                Api3D.Transform(0, 0, 0);
+                int i = Api3D.Squer(0.5f);
+                Api3D[i].Rotation_Center = (1, 1, 0);
+                Api3D[i].LineColor = Color.Yellow;
+            }
+
+            Api3D.Create_New_Figure();
+            {
+                Api3D.Transform(0.4327f, 0, 0);
+                int i = Api3D.Squer(0.5f);
+                Api3D[i].Rotation_Center = (1, 1, 0);
+                Api3D[i].LineColor = Color.Beige;
             }
 
             Api3D.drawAll();
@@ -42,16 +67,21 @@ namespace gk4
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            int d = 10;
-            Api3D.Camera.LookAt = (0, -10, 0);
+            int d = 100;
+            int iterator;
+            i++;
+            Api3D[1].Rotation_Center = (MathF.Sin(i/d), MathF.Sin(i / d), MathF.Cos(i / d));
+            this.Text = Api3D[1].Rotation_Center.ToString();
+            Api3D.rotate_y(2*i*MathF.PI / d);
+            Api3D[1].ResetRotationCenter();
+            //Api3D[1].Rotation_Center = (0, 0, 0);
+            Api3D.rotate_x(2 *i* MathF.PI / d);
 
-            //Api3D.rotate_z(i * MathF.PI / d);
-
+            //Api3D.rotate_z(MathF.PI / d);
 
             Api3D.drawAll();
-            i++;
-            if (i >= 2 * d)
-                i = 0;
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)

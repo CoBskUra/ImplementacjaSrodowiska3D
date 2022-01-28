@@ -15,27 +15,22 @@ namespace gk4.Shapes
     {
         public Camera Camera;
 
-        public Point3(float x, float y, float z, float g,
+        public Point3(float4 coordinates,
+                        float3 normalvector, float3 tangentialVector, float3 binormal,
                         int mx, int my, int mz,
-                        float transform_x, float transform_y, float transform_z,
+                        float3 transform,
                         Camera c)
         {
-            coordinates.x = x;
-            coordinates.y = y;
-            coordinates.z = z;
-            coordinates.g = g;
+            this.coordinates = coordinates;
+            this.normal_vector = normalvector;
+            this.tangentialVector = tangentialVector;
+            this.binormal = binormal;
             max_z = mz;
             max_y = my;
             max_x = mx;
-            rad.x = 0;
-            rad.y = 0;
-            rad.z = 0;
-            figure_center.x = transform_x;
-            figure_center.y = transform_y;
-            figure_center.z = transform_z;
-            RotationCenter.x = figure_center.x;
-            RotationCenter.y = figure_center.y;
-            RotationCenter.z = figure_center.z;
+            Rads = new float3();
+            FigureCenter = transform;
+            RotationCenter = transform;
             Camera = c;
         }
 
@@ -47,10 +42,13 @@ namespace gk4.Shapes
         private float4 coordinates;
 
         // rotacja o dany kąt 
-        private float3 rad;
+        public float3 Rads;
 
         // środek figury 
-        private float3 figure_center;
+        private float3 FigureCenter;
+
+        // wektor normalny
+        private float3 normal_vector, tangentialVector, binormal;
 
 
         // środek figury 
@@ -105,33 +103,38 @@ namespace gk4.Shapes
             var vector = this.vector;
             var M = make_rotations();
             vector = M * vector;
-            vector[0, 0] += RotationCenter.x / 2;
-            vector[1, 0] += RotationCenter.y / 2;
-            vector[2, 0] += RotationCenter.z / 2;
+            vector[0, 0] -= RotationCenter.x;
+            vector[1, 0] -= RotationCenter.y;
+            vector[2, 0] -= RotationCenter.z;
+
+            vector /= vector[3, 0];
+
+
+            //vector[3, 0] += RotationCenter.z;
             vector = Camera.View * vector;
             vector = Camera.Proj * vector;
             return vector;
         }
 
 
-        public (float x, float y, float z) Coordinates
+        public float3 Coordinates
         {
             private set
             {
                 this.coordinates.x = value.x;
                 this.coordinates.y = value.y;
                 this.coordinates.z = value.z;
-                figure_center.x += value.x - this.coordinates.x;
-                figure_center.y += value.y - this.coordinates.y;
-                figure_center.z += value.z - this.coordinates.z;
+                FigureCenter.x += value.x - this.coordinates.x;
+                FigureCenter.y += value.y - this.coordinates.y;
+                FigureCenter.z += value.z - this.coordinates.z;
             }
             get
             {
-                return (this.coordinates.x, this.coordinates.y, this.coordinates.z);
+                return new float3(this.coordinates.x, this.coordinates.y, this.coordinates.z);
             }
         }
 
-        public (float x, float y, float z) Rotation_Center
+        public float3 Rotation_Center
         {
             set
             {
@@ -141,7 +144,7 @@ namespace gk4.Shapes
             }
             get
             {
-                return (RotationCenter.x, RotationCenter.y, RotationCenter.z);
+                return new float3(RotationCenter.x, RotationCenter.y, RotationCenter.z);
             }
         }
 
@@ -150,9 +153,9 @@ namespace gk4.Shapes
         public void ResetRotationCenter()
         {
 
-            RotationCenter.x = figure_center.x;
-            RotationCenter.y = figure_center.y;
-            RotationCenter.z = figure_center.z;
+            RotationCenter.x = FigureCenter.x;
+            RotationCenter.y = FigureCenter.y;
+            RotationCenter.z = FigureCenter.z;
         }
 
         public void Move(float x, float y, float z)
@@ -189,52 +192,40 @@ namespace gk4.Shapes
             get
             {
                 matrix<float> tmp = new matrix<float>(4, 1);
-                tmp.m[0, 0] = coordinates.x - RotationCenter.x;
-                tmp.m[1, 0] = coordinates.y - RotationCenter.y;
-                tmp.m[2, 0] = coordinates.z - RotationCenter.z;
+                tmp.m[0, 0] = coordinates.x + RotationCenter.x;
+                tmp.m[1, 0] = coordinates.y + RotationCenter.y;
+                tmp.m[2, 0] = coordinates.z + RotationCenter.z;
                 tmp.m[3, 0] = coordinates.g;
                 return tmp;
             }
         }
 
-        
+
+
 
         public matrix<float> make_rotations()
         {
-            matrix<float> P = new matrix<double>(4, 4);
-            P[0, 0] = (float)max_y / (float)max_x;
+            matrix<float> P = new matrix<float>(4, 4);
+            P[0, 0] = 1;
             P[1, 1] = 1;
-            P[2, 3] = 1;
-            P[3, 2] = -1;
+            P[2, 2] = 1;
+            P[3, 3] = 1;
             matrix<float> T = new matrix<float>(4, 4);
             T[0, 0] = 1;
             T[1, 1] = 1;
             T[2, 2] = 1;
             T[3, 3] = 1;
-            T[2, 3] = 4;
+            T[0, 3] = 1;
+            T[1, 3] = 1;
+            T[2, 3] = 1;
             matrix<float> M = P * T;
-            M.rotate_y(rad.x);
-            M.rotate_x(rad.y);
-            M.rotate_z(rad.z);
+            M.rotate_y(Rads.y);
+            M.rotate_x(Rads.x);
+            M.rotate_z(Rads.z);
             return M;
 
         }
 
-        // funkcje rotacji
-        public void rotate_x(float rad)
-        {
-            this.rad.x = rad;
-        }
-
-        public void rotate_y(float rad)
-        {
-            this.rad.y = rad;
-        }
-
-        public void rotate_z(float rad)
-        {
-            this.rad.z = rad;
-        }
 
         
 

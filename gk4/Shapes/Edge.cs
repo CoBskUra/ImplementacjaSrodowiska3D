@@ -24,29 +24,24 @@ namespace gk4
 
         public void rotate_y(float rad)
         {
-            v1.rotate_y(rad);
-            v2.rotate_y(rad);
+            v1.Rads.y = rad;
+            v2.Rads.y = rad;
         }
 
         public void rotate_x(float rad)
         {
-            v1.rotate_x(rad);
-            v2.rotate_x(rad);
+
+            v1.Rads.x = rad;
+            v2.Rads.x = rad;
         }
 
 
         public void rotate_z(float rad)
         {
-            v1.rotate_z(rad);
-            v2.rotate_z(rad);
+            v1.Rads.z = rad;
+            v2.Rads.z = rad;
         }
 
-        public void rotate(float rad)
-        {
-            rotate_x(rad);
-            rotate_y(rad);
-            rotate_z(rad);
-        }
 
         public (float x, float y, float z) Rotation_Center
         {
@@ -55,6 +50,11 @@ namespace gk4
 
                 v1.Rotation_Center = value;
                 v2.Rotation_Center = value;
+            }
+            get
+            {
+
+                return v1.Rotation_Center;
             }
         }
 

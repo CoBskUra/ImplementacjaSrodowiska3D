@@ -12,13 +12,15 @@ namespace gk4
         Bitmap whithreboard = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
                                        Screen.PrimaryScreen.Bounds.Height);
         int i = 0;
+        int up_down = 1;
+
         Bitmaps_intermediary Api3D;
 
         public Form1()
         {
             InitializeComponent();
             Api3D = new Bitmaps_intermediary(whithreboard, whitheboardBox);
-            Api3D.Camera = Api3D.Create_Camera(0, -10, 7,
+            Api3D.Camera = Api3D.Create_Camera(0, -2, 4,
                                                 0, 0, 0,
                                                 10, 20,
                                                 MathF.PI/4);
@@ -67,12 +69,24 @@ namespace gk4
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            float moveTo = 0.01f* up_down;
+            i += up_down;
+            this.Text = i.ToString();
+            if (i == 100)
+            {
+                up_down = -1;
+            }
+            else if(i==0)
+            {
+                up_down = 1;
+            }
             int d = 100;
+            Api3D.rotate_x(2*MathF.PI / d);
+            Api3D.rotate_y(MathF.PI / d);
+            Api3D[0].Rotation_Center = ((float)up_down / 2, -(float)up_down / 3, (float)up_down);
+            Api3D[0].rotate_y(MathF.PI / d);
+            Api3D[1].Move(-moveTo, moveTo, 0);
             
-            //Api3D[1].Rotation_Center = (0, 0, 0);
-
-            Api3D.rotate(MathF.PI / d);
-
             Api3D.drawAll();
 
 

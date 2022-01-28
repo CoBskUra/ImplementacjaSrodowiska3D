@@ -107,10 +107,12 @@ namespace gk4._3DApi.Components
         }
 
 
-
-
         public Camera(float position_x, float position_y, float position_z,
                         float lookAt_x, float lookAt_y, float lookAt_z,
+                        int wide, int hieght, float n, float f, float fov): this((float3)(position_x, position_y, position_z), (float3)(lookAt_x, lookAt_y, lookAt_z), wide, hieght, n,  f, fov)
+        {}
+
+            public Camera(float3 position, float3 lookAt,
                         int wide, int hieght, float n, float f, float fov)
         {
             if (n <= 0)
@@ -123,15 +125,8 @@ namespace gk4._3DApi.Components
             aspect = (float)wide / (float)hieght;
             FOV = MathF.Asin(MathF.Sin(fov - MathF.PI / 2)) + MathF.PI / 2;
 
-            this.POSITION.x = position_x;
-            this.POSITION.y = position_y;
-            this.POSITION.z = position_z;
-
-            this.LOOK_AT.x = lookAt_x;
-            this.LOOK_AT.y = lookAt_y;
-            this.LOOK_AT.z = lookAt_z;
-
-            refreshViever();
+            this.Position = position;
+            this.LookAt = lookAt;
             RefreshPerspective();
         }
 

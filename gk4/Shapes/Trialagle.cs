@@ -119,6 +119,7 @@ namespace gk4
         public void drawMe(Color LineColor, ref Bitmap Whitheboard)
         {
             countPosition();
+
             fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B));
 
             drawing_lines.drawe(x1,y1,x2,y2, LineColor, ref Whitheboard);

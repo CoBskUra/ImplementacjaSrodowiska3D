@@ -31,6 +31,9 @@ namespace gk4.Shapes
             Rads = new float3();
             FigureCenter = transform;
             RotationCenter = transform;
+            visableCoordinates.x = coordinates.x;
+            visableCoordinates.y = coordinates.y;
+            visableCoordinates.z = coordinates.z;
             Camera = c;
         }
 
@@ -40,6 +43,8 @@ namespace gk4.Shapes
 
         // położenie w przestrzeni
         private float4 coordinates;
+
+        public float3 visableCoordinates;
 
         // rotacja o dany kąt 
         public float3 Rads;
@@ -108,6 +113,10 @@ namespace gk4.Shapes
             vector[2, 0] -= RotationCenter.z;
 
             vector /= vector[3, 0];
+
+            visableCoordinates.x = vector[0, 0];
+            visableCoordinates.y = vector[1, 0];
+            visableCoordinates.z = vector[2, 0];
 
 
             //vector[3, 0] += RotationCenter.z;

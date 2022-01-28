@@ -14,7 +14,7 @@ namespace gk4.Shapes
         public Color LineColor;
         public List<Trialagle> Trialagles = new List<Trialagle>();
 
-        private float3 Rads => Trialagles[0].Edges[0].v1.Rads;
+        private float3 Rads => Trialagles[0].a.Rads;
 
         public virtual void Add(Trialagle trarangle)
         {
@@ -42,7 +42,7 @@ namespace gk4.Shapes
         public void rotate_x(float rad)
         {
 
-            //rad = Count_Rad(rad, Rads.x);
+            rad = Count_Rad(rad, Rads.x);
 
             foreach (var trarangle in Trialagles)
                 trarangle.rotate_x(rad);
@@ -50,14 +50,14 @@ namespace gk4.Shapes
 
         public void rotate_y(float rad)
         {
-            //rad = Count_Rad(rad, Rads.y);
+            rad = Count_Rad(rad, Rads.y);
             foreach (var trarangle in Trialagles)
                 trarangle.rotate_y(rad);
         }
 
         public void rotate_z(float rad)
         {
-            //rad = Count_Rad(rad, Rads.z);
+            rad = Count_Rad(rad, Rads.z);
             foreach (var trarangle in Trialagles)
                 trarangle.rotate_z(rad);
         }

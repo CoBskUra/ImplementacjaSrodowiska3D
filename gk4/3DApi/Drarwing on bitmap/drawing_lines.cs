@@ -48,14 +48,9 @@ namespace gk4
         }
 
 
-        public static void drawe(Edge e, Color c, ref Bitmap whiteboard)
+        public static void drawe(int x1, int y1, int x2, int y2, Color c, ref Bitmap whiteboard)
         {
 
-
-            int x1 = e.v1.x_parm_on_bitmap;
-            int y1 = e.v1.y_parm_on_bitmap;
-            int x2 = e.v2.x_parm_on_bitmap;
-            int y2 = e.v2.y_parm_on_bitmap;
 
             if (x1 > x2)
             {

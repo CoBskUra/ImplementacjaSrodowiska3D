@@ -114,9 +114,9 @@ namespace gk4
         //{
         //    Edges.Add(e);
         //}
-        }
+        
         //}
-        }
+        
 
         public void drawMe(Color LineColor, ref Bitmap Whitheboard)
         {
@@ -129,9 +129,9 @@ namespace gk4
         }
 
         public void rotate_x(float rad)
+        { 
             a.Rads.x = rad;
             b.Rads.x = rad;
-            c.Rads.x = rad;
             c.Rads.x = rad;
         }
 
@@ -165,9 +165,11 @@ namespace gk4
         }
 
         public void ResetRotationCenter()
+        {
             a.ResetRotationCenter();
             b.ResetRotationCenter();
-            c.ResetRotationCenter();        }
+            c.ResetRotationCenter();
+        }
 
         public void Move(float x, float y, float z)
         {

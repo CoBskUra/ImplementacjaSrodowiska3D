@@ -25,8 +25,8 @@ namespace gk4
 
             Api3D.Create_New_Figure();
             {
-                Api3D.Transform(0, 1, -10);
-                int i = Api3D.Sphere(0.1f, 10, 5);
+                Api3D.Transform(0, 1, 0);
+                int i = Api3D.Sphere(0.6f, 6, 5);
 
             }
 
@@ -42,7 +42,7 @@ namespace gk4
             {
                 Api3D.Transform(1, 1, 0);
                 int i = Api3D.Sphere(0.1f, 10, 5);
-                //Api3D[i].Rotation_Center = (-1, -1f, 0);
+                Api3D[i].Rotation_Center = (-1, -1f, 0);
                 Api3D[i].LineColor = Color.White;
             }
 
@@ -50,7 +50,7 @@ namespace gk4
             {
                 Api3D.Transform(0, 0, 0);
                 int i = Api3D.Squer(0.5f);
-                Api3D[i].Rotation_Center = (1, 1, 0);
+                Api3D[i].Rotation_Center = (1, 2, 0);
                 Api3D[i].LineColor = Color.Yellow;
             }
 
@@ -68,17 +68,10 @@ namespace gk4
         private void timer1_Tick(object sender, EventArgs e)
         {
             int d = 100;
-            int iterator;
-            i++;
-            Api3D[1].Rotation_Center = (MathF.Sin(i/d), MathF.Sin(i / d), MathF.Cos(i / d));
-            this.Text = Api3D[1].Rotation_Center.ToString();
-            Api3D[1].Move(0.1f, 0, 0);
-            Api3D.rotate_y(2*MathF.PI / d);
             
             //Api3D[1].Rotation_Center = (0, 0, 0);
-            Api3D.rotate_x(2 * MathF.PI / d);
 
-            //Api3D.rotate_z(MathF.PI / d);
+            Api3D.rotate(MathF.PI / d);
 
             Api3D.drawAll();
 

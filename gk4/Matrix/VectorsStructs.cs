@@ -16,6 +16,10 @@ namespace gk4.Matrix
             x = a; y = b; z = c;
         }
 
+        public override string ToString()
+        {
+            return $"{x} {y} {z}";
+        }
 
         public static implicit operator float3((float a, float b, float c) krotka)
         {

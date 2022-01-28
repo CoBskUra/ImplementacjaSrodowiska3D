@@ -2,9 +2,8 @@
 using gk4.Shapes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace gk4._3DApi.Drarwing_on_bitmap
 {
@@ -56,30 +55,78 @@ namespace gk4._3DApi.Drarwing_on_bitmap
 
         
 
-        public static int Sphere(this Bitmaps_intermediary Bitmap_Api, float R, int number_of_trarangle_at_horyzontal, int  number_of_trarangle_at_vertical)
+        public static int Sphere(this Bitmaps_intermediary Bitmap_Api, float R, int stackCount, int sectorCount)
         {
-            float vertical_density = MathF.PI / number_of_trarangle_at_vertical;
-            float horizontal_density = 2*MathF.PI / number_of_trarangle_at_horyzontal;
-            for (int i = 0; i < number_of_trarangle_at_vertical; i++)
+            float stackStep = MathF.PI / stackCount;
+            float sectorStep = 2*MathF.PI / sectorCount;
+            List<Point3> vertixes = new List<Point3>();
+
+            //vertixes.Add(MakePointOnSphere(0, 0, R, Bitmap_Api));
+            for (int i = 1; i <= stackCount-1; i++)
             {
 
-                for (int j = 0; j < number_of_trarangle_at_horyzontal; j++)
+                for (int j = 0; j < sectorCount; j++)
                 {
-                    float Psi = horizontal_density * j, Phi = vertical_density * i;
+                    
+                    float Psi = stackStep * i, Phi = sectorStep * j;
                     Point3 point1 = MakePointOnSphere(Psi, Phi, R, Bitmap_Api);
 
-                    Psi = horizontal_density * j; Phi = vertical_density * (i + 1);
-                    Point3 point2 = MakePointOnSphere(Psi, Phi, R, Bitmap_Api);
-
-                    Psi = horizontal_density * (j - 1); Phi = vertical_density * (i + 1);
-                    Point3 point3 = MakePointOnSphere(Psi, Phi, R, Bitmap_Api);
-
-
-                    Bitmap_Api.Add_Trialagle(point1,point2,point3);
-
+                    vertixes.Add(point1);
                 }
 
             }
+
+
+            // vierzchołek na górze i na dole z wierzchołkami poniżej/ powyrzej 
+            Point3 North = MakePointOnSphere(0, 0, R, Bitmap_Api);
+            Point3 Southe = MakePointOnSphere(MathF.PI, 2 * MathF.PI, R, Bitmap_Api);
+            for (int j = 0; j < sectorCount; j++)
+            {
+                int next;
+                if (j == sectorCount - 1)
+                    next = 0;
+                else
+                    next = j + 1;
+
+                Bitmap_Api.Add_Trialagle(
+                        North,
+                        vertixes[next],
+                        vertixes[j]
+                        );
+                Bitmap_Api.Add_Trialagle(
+                    vertixes[vertixes.Count - sectorCount + j],
+                    vertixes[vertixes.Count - sectorCount + next],
+                    Southe
+                    );
+            }
+
+
+            for (int i = 0; i < stackCount - 2; i++)
+            {
+
+                for (int j = 0; j < sectorCount; j++)
+                {
+                    int next;
+                    if (j == sectorCount - 1)
+                        next = 0;
+                    else
+                        next = j + 1;
+
+                    Bitmap_Api.Add_Trialagle(
+                        vertixes[i * sectorCount + j],
+                        vertixes[i * sectorCount + next],
+                        vertixes[(i + 1) * sectorCount + next]
+                        );
+                    Bitmap_Api.Add_Trialagle(
+                        vertixes[i * sectorCount + j],
+                        vertixes[(i + 1) * sectorCount + next],
+                        vertixes[(i + 1) * sectorCount + j]
+                        );
+                }
+
+            }
+
+            
 
             return Bitmap_Api.FiguresNumber - 1;
         }

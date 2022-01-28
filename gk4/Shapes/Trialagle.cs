@@ -1,6 +1,7 @@
 ﻿using gk4.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace gk4
     public class Trialagle
     {
         public Point3 a,b,c;
+        int x1, y1, x2, y2, x3, y3; // pozycja odpowiednich punktów na bitmapie
 
 
         public Trialagle(Point3 a, Point3 b, Point3 c)
@@ -21,108 +23,104 @@ namespace gk4
             this.c = c;
         }
 
-        //public List<Edge>[] ET()
-        //{
 
-        //    List<Edge>[] et = new List<Edge>[ymax - ymini + 1];
-        //    for (int j = 0; j < et.Length; j++)
-        //        et[j] = new List<Edge>();
+        private void sort(ref (int x, int y) theHighest, ref (int x, int y) theLowest, ref (int x, int y) medium)
+        {
+            if (theHighest.y < theLowest.y)
+            {
+                var tmp = theHighest;
+                theHighest = theLowest;
+                theLowest = tmp;
+            }
+            if (medium.y < theLowest.y)
+            {
+                var tmp = medium;
+                medium = theLowest;
+                theLowest = tmp;
+            }
+            else if (medium.y > theHighest.y)
+            {
+                var tmp = medium;
+                medium = theHighest;
+                theHighest = tmp;
+            }
+        }
 
-        //    int min_y = ymini;
-        //    foreach (var p in vertex)
-        //    {
-        //        var es = edges(p);
-        //        if (es.e1.ymini - ymini >= 0 && !et[es.e1.ymini - ymini].Contains(es.e1))
-        //        {
-        //            et[es.e1.ymini - ymini].Add(es.e1);
-        //        }
+        public void fillLine(int x1, int x2, int y, ref Bitmap whitheBoard, Color c)
+        {
+            if (y < 0 || y >= whitheBoard.Height)
+                return;
+            if (x1>x2)
+            {
+                var tmp = x1;
+                x1 = x2;
+                x2 = tmp;
+            }
 
-        //        if (es.e2.ymini - ymini >= 0 && !et[es.e2.ymini - ymini].Contains(es.e2))
-        //        {
-        //            et[es.e2.ymini - ymini].Add(es.e2);
-        //        }
-
-        //    }
-
-
-        //    return et;
-
-        //}
-
-        //public void fillMe(ref Bitmap whiteboard)
-        //{
-            
-
-        //    List<Edge> ATE = new List<Edge>();
-        //    var ET = this.ET();
-
-        //    int x1 = Edges[0].v1.x_parm_on_bitmap;
-        //    int y1 = Edges[0].v1.y_parm_on_bitmap;
-        //    int x2 = Edges[0].v2.x_parm_on_bitmap;
-        //    int y2 = Edges[0].v2.y_parm_on_bitmap;
-        //    int x2 = Edges[1].v2.x_parm_on_bitmap;
-        //    int y2 = Edges[1].v2.y_parm_on_bitmap;
-
-        //    int y_min = this.ymini;
-        //    int y = y_min;
-        //    int ylast = ymax;
-        //    int xmini = this.xmini;
+            if (x2 >= whitheBoard.Width)
+                x2 = whitheBoard.Width-1;
+            for (int i = x1>0? x1:0; i <= x2; i++)
+            {
+                whitheBoard.SetPixel(i, y, c);
+            }
+        }
 
 
-        //    while (y != ylast + 1)
-        //    {
+        private void fill_me(ref Bitmap Whitheboard, Color c)
+        {
+            (int x, int y) theHighest = (x1, y1);
+            (int x, int y) theLowest = (x2, y2);
+            (int x, int y) medium = (x3, y3);
+
+            sort(ref theHighest, ref theLowest, ref medium);
+
+            int TheLowestTheHighests_Highte = theHighest.y - theLowest.y;
+            int theLowestMedium_Highte = medium.y - theLowest.y;
+            int MediumTheHighests_Highte = theHighest.y - medium.y;
 
 
-        //        ATE.AddRange(ET[y - y_min]);
+            double theLowestMediumSkalar = ((double)medium.x - (double)theLowest.x) / (double)theLowestMedium_Highte;
+            double theLowestTheHighestSkalar = ((double)theHighest.x - (double)theLowest.x) / (double)TheLowestTheHighests_Highte;
+            double MediumTheHighestsSkalar = ((double)theHighest.x - (double)medium.x) / (double)MediumTheHighests_Highte;
 
-        //        ATE = ATE.OrderBy(a => a.ATEx).ToList();
-        //        double[] N = new double[3];
+            if (TheLowestTheHighests_Highte != 0 && theLowestMedium_Highte != 0)
+            {
+                for (int i = 0; i <= theLowestMedium_Highte; i++)
+                {
+                    fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
+                                (int)(theLowest.x + theLowestMediumSkalar * i),
+                                i + theLowest.y,
+                                ref Whitheboard, c);
 
-        //        for (int i = 0; i + 1 < ATE.Count; i += 2)
-        //        {
+                }
+            }
+            if (MediumTheHighests_Highte != 0 && TheLowestTheHighests_Highte != 0)
+            {
+                for (int i = theLowestMedium_Highte; i <= TheLowestTheHighests_Highte; i++)
+                {
+                    fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
+                                (int)(medium.x + MediumTheHighestsSkalar * (i - theLowestMedium_Highte)),
+                                i + theLowest.y,
+                                ref Whitheboard, c);
+                }
+            }
 
-        //            int x1 = (int)ATE[i].ATEx;
-        //            int x2 = (int)ATE[i + 1].ATEx;
+        }
 
-        //            if (x1 < 0)
-        //                break;
+        private void countPosition()
+        {
+            x1 = a.x_parm_on_bitmap; y1 = a.y_parm_on_bitmap;
+            x2 = b.x_parm_on_bitmap; y2 = b.y_parm_on_bitmap;
+            x3 = c.x_parm_on_bitmap; y3 = c.y_parm_on_bitmap;
+        }
 
 
-
-        //            for (int j = x1; j <= x2; j++)
-        //            {
-        //                Color c = Color.Black;
-        //                double z = 0;
-        //                N[0] = 0; N[1] = 0; N[2] = 1;
-        //                c = Color.Red;
-                        
-        //                whiteboard.SetPixel(j, y, c);
-        //            }
-
-        //        }
-        //        y++;
-        //        for (int j = ATE.Count() - 1; j >= 0; j--)
-        //            if (ATE[j].ymax == y)
-        //                ATE.RemoveAt(j);
-        //            else
-        //                ATE[j].ATEx += ATE[j].skalar;
-
-        //    }
-        //}
-
-        //public void Add(Edge e)
-        //{
-        //    Edges.Add(e);
-        //}
-        
-        //}
-        
 
         public void drawMe(Color LineColor, ref Bitmap Whitheboard)
         {
-            int x1 = a.x_parm_on_bitmap, y1 = a.y_parm_on_bitmap;
-            int x2 = b.x_parm_on_bitmap, y2 = b.y_parm_on_bitmap;
-            int x3 = c.x_parm_on_bitmap, y3 = c.y_parm_on_bitmap;
+            countPosition();
+            fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B));
+
             drawing_lines.drawe(x1,y1,x2,y2, LineColor, ref Whitheboard);
             drawing_lines.drawe(x2,y2,x3,y3, LineColor, ref Whitheboard);
             drawing_lines.drawe(x3,y3,x1,y1, LineColor, ref Whitheboard);
@@ -154,9 +152,9 @@ namespace gk4
         {
             set
             {
-                a.Rotation_Center = Rotation_Center;
-                b.Rotation_Center = Rotation_Center;
-                c.Rotation_Center = Rotation_Center;
+                a.Rotation_Center = value;
+                b.Rotation_Center = value;
+                c.Rotation_Center = value;
             }
             get
             {

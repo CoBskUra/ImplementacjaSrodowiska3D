@@ -1,6 +1,7 @@
 ﻿using gk4.Matrix;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -25,8 +26,11 @@ namespace gk4.Shapes
         // rysuje figure
         public void drawMe(ref Bitmap Whitheboard)
         {
+
             foreach (var t in Trialagles)
+            {
                 t.drawMe(LineColor, ref Whitheboard);
+            }
         }
 
         private float Count_Rad(float rad, float curentRad)

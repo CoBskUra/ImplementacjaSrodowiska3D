@@ -13,8 +13,8 @@ namespace gk4
     // Pośrednik między bitmapą a programistą
     public class Bitmaps_intermediary
     {
-        Bitmap Whitheboard;
-        PictureBox WhitheboardBox;
+        public Bitmap Whitheboard;
+        public PictureBox WhitheboardBox;
 
         // zmienne wyznaczające rozmiar widzialnego świata
         int Max_z, Max_y, Max_x;

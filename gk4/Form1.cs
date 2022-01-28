@@ -34,7 +34,7 @@ namespace gk4
             {
                 Api3D.Transform(0, 0, 0);
                 int i = Api3D.Squer(0.5f);
-                //Api3D[i].Rotation_Center = (-1, -1f, 0);
+                Api3D[i].Rotation_Center = (-1, -1f, 0);
                 Api3D[i].LineColor = Color.White;
             }
 
@@ -58,7 +58,7 @@ namespace gk4
             {
                 Api3D.Transform(0.4327f, 0, 0);
                 int i = Api3D.Squer(0.5f);
-                Api3D[i].Rotation_Center = (1, 1, 0);
+                Api3D[i].Rotation_Center = (1, 5, 0);
                 Api3D[i].LineColor = Color.Beige;
             }
 

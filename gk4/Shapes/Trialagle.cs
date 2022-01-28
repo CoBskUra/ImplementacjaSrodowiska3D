@@ -10,11 +10,11 @@ namespace gk4
 {
     public class Trialagle
     {
-
         public Point3 a,b,c;
 
+
         public Trialagle(Point3 a, Point3 b, Point3 c)
-        {
+        { 
 
             this.a = a;
             this.b = b;
@@ -108,17 +108,14 @@ namespace gk4
         //                ATE[j].ATEx += ATE[j].skalar;
 
         //    }
-
         //}
 
         //public void Add(Edge e)
         //{
         //    Edges.Add(e);
         //}
-
-        private bool amIVisable()
-        {
-            return true;
+        }
+        //}
         }
 
         public void drawMe(Color LineColor, ref Bitmap Whitheboard)
@@ -132,9 +129,9 @@ namespace gk4
         }
 
         public void rotate_x(float rad)
-        {
             a.Rads.x = rad;
             b.Rads.x = rad;
+            c.Rads.x = rad;
             c.Rads.x = rad;
         }
 
@@ -157,7 +154,6 @@ namespace gk4
         {
             set
             {
-
                 a.Rotation_Center = Rotation_Center;
                 b.Rotation_Center = Rotation_Center;
                 c.Rotation_Center = Rotation_Center;
@@ -169,11 +165,9 @@ namespace gk4
         }
 
         public void ResetRotationCenter()
-        {
             a.ResetRotationCenter();
             b.ResetRotationCenter();
-            c.ResetRotationCenter();
-        }
+            c.ResetRotationCenter();        }
 
         public void Move(float x, float y, float z)
         {

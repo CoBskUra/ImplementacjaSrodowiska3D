@@ -128,9 +128,10 @@ namespace gk4._3DApi.Components
             this.Position = position;
             this.LookAt = lookAt;
             RefreshPerspective();
+            refreshViever();
         }
 
-        private void refreshViever()
+        public void refreshViever()
         {
             matrix<float> Uworld = new matrix<float>(3, 1);
             Uworld[0, 0] = 0; Uworld[1, 0] = 1; Uworld[2, 0] = 0;
@@ -141,6 +142,8 @@ namespace gk4._3DApi.Components
             matrix<float> R = MatrixTransformationNeededTo3DModeling.cross_product(Uworld, D);
 
             matrix<float> U = MatrixTransformationNeededTo3DModeling.cross_product(D, R);
+
+            VIEW = new matrix<float>(4,4);
 
             VIEW[0, 0] = R[0, 0];
             VIEW[0, 1] = R[1, 0];

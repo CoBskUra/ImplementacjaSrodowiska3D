@@ -30,7 +30,8 @@ namespace gk4.Shapes
             max_x = mx;
             Rads = new float3();
             FigureCenter = transform;
-            RotationCenter = transform;
+            CurenntFigureCenter = FigureCenter;
+            RotationCenter = FigureCenter;
             visableCoordinates.x = coordinates.x;
             visableCoordinates.y = coordinates.y;
             visableCoordinates.z = coordinates.z;
@@ -49,8 +50,11 @@ namespace gk4.Shapes
         // rotacja o dany kąt 
         public float3 Rads;
 
-        // środek figury 
+        // defaultowy środek figury 
         private float3 FigureCenter;
+
+        // obecny środek
+        public float3 CurenntFigureCenter;
 
         // wektor normalny
         private float3 normal_vector, tangentialVector, binormal;
@@ -70,7 +74,6 @@ namespace gk4.Shapes
             {
 
                 var vector = CoordinateMulipleByProjViewModel();
-                vector = vector / vector[3, 0];
                 return (int)((1 + vector[2, 0]) / 2);
 
             }
@@ -83,7 +86,6 @@ namespace gk4.Shapes
             {
 
                 var vector = CoordinateMulipleByProjViewModel();
-                vector = vector / vector[3, 0];
                 return (int)(max_x * (1 + vector[0, 0]) / 2);
 
             }
@@ -95,7 +97,6 @@ namespace gk4.Shapes
             get
             {
                 var vector = CoordinateMulipleByProjViewModel();
-                vector = vector / vector[3, 0];
                 return (int)(max_y * (1 - vector[1, 0]) / 2);
 
 
@@ -105,23 +106,21 @@ namespace gk4.Shapes
         
         private matrix<float> CoordinateMulipleByProjViewModel()
         {
-            var vector = this.vector;
-            var M = make_rotations();
-            vector = M * vector;
-            vector[0, 0] -= RotationCenter.x;
-            vector[1, 0] -= RotationCenter.y;
-            vector[2, 0] -= RotationCenter.z;
-
-            vector /= vector[3, 0];
+            var vector = this.RotatedCordinates;
 
             visableCoordinates.x = vector[0, 0];
             visableCoordinates.y = vector[1, 0];
             visableCoordinates.z = vector[2, 0];
 
+            CurenntFigureCenter.x = visableCoordinates.x + FigureCenter.x - coordinates.x;
+            CurenntFigureCenter.y = visableCoordinates.y + FigureCenter.y - coordinates.y;
+            CurenntFigureCenter.z = visableCoordinates.z + FigureCenter.z - coordinates.z;
 
-            //vector[3, 0] += RotationCenter.z;
             vector = Camera.View * vector;
             vector = Camera.Proj * vector;
+
+            vector /= vector[3, 0];
+
             return vector;
         }
 
@@ -136,6 +135,7 @@ namespace gk4.Shapes
                 FigureCenter.x += value.x - this.coordinates.x;
                 FigureCenter.y += value.y - this.coordinates.y;
                 FigureCenter.z += value.z - this.coordinates.z;
+                CurenntFigureCenter = FigureCenter;
             }
             get
             {
@@ -158,6 +158,7 @@ namespace gk4.Shapes
         }
 
         
+
 
         public void ResetRotationCenter()
         {
@@ -196,15 +197,25 @@ namespace gk4.Shapes
         }
 
 
-        private matrix<float> vector 
+        private matrix<float> RotatedCordinates 
         {
             get
             {
                 matrix<float> tmp = new matrix<float>(4, 1);
+
                 tmp.m[0, 0] = coordinates.x + RotationCenter.x;
                 tmp.m[1, 0] = coordinates.y + RotationCenter.y;
                 tmp.m[2, 0] = coordinates.z + RotationCenter.z;
                 tmp.m[3, 0] = coordinates.g;
+
+                var M = make_rotations();
+                tmp = M * tmp;
+                tmp[0, 0] -= RotationCenter.x;
+                tmp[1, 0] -= RotationCenter.y;
+                tmp[2, 0] -= RotationCenter.z;
+
+                tmp /= tmp[3, 0];
+
                 return tmp;
             }
         }

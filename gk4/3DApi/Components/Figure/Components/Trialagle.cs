@@ -1,4 +1,5 @@
-﻿using gk4.Shapes;
+﻿using gk4.Matrix;
+using gk4.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -149,7 +150,7 @@ namespace gk4
         }
 
 
-        public (float x, float y, float z) Rotation_Center
+        public float3 Rotation_Center
         {
             set
             {
@@ -160,6 +161,15 @@ namespace gk4
             get
             {
                 return a.Rotation_Center;
+            }
+        }
+
+        public float3 FigureCenter
+        {
+
+            get
+            {
+                return a.CurenntFigureCenter;
             }
         }
 

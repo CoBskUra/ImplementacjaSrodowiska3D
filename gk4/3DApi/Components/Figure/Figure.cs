@@ -73,7 +73,7 @@ namespace gk4.Shapes
             rotate_z(rad);
         }
 
-        public (float x, float y, float z) Rotation_Center
+        public float3 Rotation_Center
         {
             set
             {
@@ -83,6 +83,15 @@ namespace gk4.Shapes
             get
             {
                 return Trialagles[0].Rotation_Center;
+            }
+        }
+
+        public float3 FigureCenter
+        {
+            
+            get
+            {
+                return Trialagles[0].FigureCenter;
             }
         }
 

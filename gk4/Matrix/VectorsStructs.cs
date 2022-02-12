@@ -26,6 +26,16 @@ namespace gk4.Matrix
             return new float3(krotka.a, krotka.b, krotka.c);
         }
 
+        public static bool operator ==(float3 a, float3 b)
+        {
+            return a.x == b.x && a.y == b.y && a.z == b.z;
+        }
+
+        public static bool operator !=(float3 a, float3 b)
+        {
+            return !(a==b);
+        }
+
         public static implicit operator (float a, float b, float c)(float3 f3)
         {
             return (f3.x, f3.y, f3.z);

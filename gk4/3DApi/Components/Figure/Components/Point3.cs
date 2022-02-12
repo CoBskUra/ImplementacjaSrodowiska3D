@@ -3,6 +3,7 @@ using gk4._3DApi.Components;
 using gk4.Matrix;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,9 +113,7 @@ namespace gk4.Shapes
             visableCoordinates.y = vector[1, 0];
             visableCoordinates.z = vector[2, 0];
 
-            CurenntFigureCenter.x = visableCoordinates.x + FigureCenter.x - coordinates.x;
-            CurenntFigureCenter.y = visableCoordinates.y + FigureCenter.y - coordinates.y;
-            CurenntFigureCenter.z = visableCoordinates.z + FigureCenter.z - coordinates.z;
+            
 
             vector = Camera.View * vector;
             vector = Camera.Proj * vector;
@@ -135,7 +134,6 @@ namespace gk4.Shapes
                 FigureCenter.x += value.x - this.coordinates.x;
                 FigureCenter.y += value.y - this.coordinates.y;
                 FigureCenter.z += value.z - this.coordinates.z;
-                CurenntFigureCenter = FigureCenter;
             }
             get
             {
@@ -214,7 +212,10 @@ namespace gk4.Shapes
                 tmp[1, 0] -= RotationCenter.y;
                 tmp[2, 0] -= RotationCenter.z;
 
-                tmp /= tmp[3, 0];
+                CurenntFigureCenter.x = tmp[0, 0] + FigureCenter.x - coordinates.x;
+                CurenntFigureCenter.y = tmp[1, 0] + FigureCenter.y - coordinates.y;
+                CurenntFigureCenter.z = tmp[2, 0] + FigureCenter.z - coordinates.z;
+
 
                 return tmp;
             }

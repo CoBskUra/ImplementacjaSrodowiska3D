@@ -61,7 +61,7 @@ namespace gk4._3DApi.Drarwing_on_bitmap
             float sectorStep = 2*MathF.PI / sectorCount;
             List<Point3> vertixes = new List<Point3>();
 
-            //vertixes.Add(MakePointOnSphere(0, 0, R, Bitmap_Api));
+            // tworze punkty które tworzą sfere
             for (int i = 1; i <= stackCount-1; i++)
             {
 
@@ -77,7 +77,7 @@ namespace gk4._3DApi.Drarwing_on_bitmap
             }
 
 
-            // vierzchołek na górze i na dole z wierzchołkami poniżej/ powyrzej 
+            // łącze wierzchołek na górze i na dole z wierzchołkami poniżej/ powyrzej 
             Point3 North = MakePointOnSphere(0, 0, R, Bitmap_Api);
             Point3 Southe = MakePointOnSphere(MathF.PI, 2 * MathF.PI, R, Bitmap_Api);
             for (int j = 0; j < sectorCount; j++)
@@ -100,7 +100,7 @@ namespace gk4._3DApi.Drarwing_on_bitmap
                     );
             }
 
-
+            // łącze pozostały punkty
             for (int i = 0; i < stackCount - 2; i++)
             {
 

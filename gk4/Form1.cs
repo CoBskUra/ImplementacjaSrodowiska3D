@@ -41,20 +41,20 @@ namespace gk4
             //    Api3D[i].LineColor = Color.White;
             //}
 
-            Api3D.Create_New_Figure();
-            {
-                Api3D.Transform(0, 0, 0);
-                int i = Api3D.Sphere(1f, 3, 3);
-                //Api3D[i].Rotation_Center = (-1, -1f, 0);
-                Api3D[i].LineColor = Color.Green;
-            }
-
             //Api3D.Create_New_Figure();
             //{
             //    Api3D.Transform(0, 0, 0);
-            //    int i = Api3D.Squer(0.5f);
-            //    Api3D[i].LineColor = Color.Yellow;
+            //    int i = Api3D.Sphere(1f, 3, 3);
+            //    //Api3D[i].Rotation_Center = (-1, -1f, 0);
+            //    Api3D[i].LineColor = Color.Green;
             //}
+
+            Api3D.Create_New_Figure();
+            {
+                Api3D.Transform(0, 0, 0);
+                int i = Api3D.Squer(0.5f);
+                Api3D[i].LineColor = Color.Yellow;
+            }
 
             //Api3D.Create_New_Figure();
             //{
@@ -82,13 +82,13 @@ namespace gk4
             int d = 100;
             Api3D.rotate_x(2 * MathF.PI / d);
             Api3D.rotate_y(MathF.PI / d);
-            //Api3D[0].Rotation_Center = ((float)direction / 2, -(float)direction / 3, (float)direction);
-            //Api3D[0].rotate_y(MathF.PI / d);
+            Api3D[0].Rotation_Center = ((float)direction / 2, -(float)direction / 3, (float)direction);
+            Api3D[0].rotate_y(MathF.PI / d);
             //Api3D[0].Move(-moveTo, moveTo, 0);
 
             //this.Text = Api3D[0].FigureCenter.ToString();
-            //Api3D.Camera.LookAt = Api3D[3].FigureCenter;
-            
+            Api3D.Camera.LookAt = Api3D[0].FigureCenter;
+
 
             Api3D.drawAll();
 

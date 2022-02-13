@@ -130,14 +130,18 @@ namespace gk4
         public void drawMe(Color LineColor, ref Bitmap Whitheboard)
         {
             countPosition();
-            if (a.NormalVector.z < 0)
+            float3 normalvector = MatrixTransformationNeededTo3DModeling.cross_product(
+                b.visableCoordinates - a.visableCoordinates,
+                c.visableCoordinates - a.visableCoordinates
+                );
+            if (normalvector.z > 0)
             {
+                
                 fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B));
-            }
                 drawing_lines.drawe(x1, y1, x2, y2, LineColor, ref Whitheboard);
                 drawing_lines.drawe(x2, y2, x3, y3, LineColor, ref Whitheboard);
                 drawing_lines.drawe(x3, y3, x1, y1, LineColor, ref Whitheboard);
-            
+            }
         }
 
         public void rotate_x(float rad)

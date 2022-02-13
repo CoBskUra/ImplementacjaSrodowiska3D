@@ -36,6 +36,11 @@ namespace gk4.Matrix
             return !(a==b);
         }
 
+        public static float3 operator -(float3 a, float3 b)
+        {
+            return new float3(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+
         public static implicit operator (float a, float b, float c)(float3 f3)
         {
             return (f3.x, f3.y, f3.z);

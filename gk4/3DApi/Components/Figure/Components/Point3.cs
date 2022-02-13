@@ -109,16 +109,13 @@ namespace gk4.Shapes
         {
             var vector = this.RotatedCordinates;
 
+            vector = Camera.View * vector;
+            vector = Camera.Proj * vector;
+            vector /= vector[3, 0];
+
             visableCoordinates.x = vector[0, 0];
             visableCoordinates.y = vector[1, 0];
             visableCoordinates.z = vector[2, 0];
-
-            
-
-            vector = Camera.View * vector;
-            vector = Camera.Proj * vector;
-
-            vector /= vector[3, 0];
 
             return vector;
         }
@@ -134,13 +131,14 @@ namespace gk4.Shapes
                 tmp.m[2, 0] = normal_vector.z + RotationCenter.z;
                 tmp.m[3, 0] = 0;
 
-                var M = reverseMatrixRotation();
+                var M = RotationMatrix();
                 tmp = M * tmp;
                 tmp[0, 0] -= RotationCenter.x;
                 tmp[1, 0] -= RotationCenter.y;
                 tmp[2, 0] -= RotationCenter.z;
 
-                Debug.WriteLine(tmp.ToString());
+                
+                //Debug.WriteLine(tmp.ToString());
 
                 return tmp;
             }
@@ -187,7 +185,6 @@ namespace gk4.Shapes
 
         public void ResetRotationCenter()
         {
-
             RotationCenter.x = FigureCenter.x;
             RotationCenter.y = FigureCenter.y;
             RotationCenter.z = FigureCenter.z;
@@ -267,8 +264,8 @@ namespace gk4.Shapes
             T[1, 3] = 1;
             T[2, 3] = 1;
             matrix<float> M = P * T;
-            M.rotate_y(Rads.y);
             M.rotate_x(Rads.x);
+            M.rotate_y(Rads.y);
             M.rotate_z(Rads.z);
             return M;
 

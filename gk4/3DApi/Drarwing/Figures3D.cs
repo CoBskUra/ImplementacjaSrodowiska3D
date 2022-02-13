@@ -12,44 +12,78 @@ namespace gk4._3DApi.Drarwing_on_bitmap
         public static int Squer(this Bitmaps_intermediary Bitmap_API, float A)
         {
             A = A / 2;
-            for (int i = 0; i < 2; i++)
-            {
-                float3 normalVactor = new float3(MathF.Pow(-1, i) * -1, 0, 0);
+                float3 normalVactor = new float3( -1, 0, 0);
                 Bitmap_API.Add_rectangle(
-                    Bitmap_API.create_point(-A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), 
-                                            normalVactor, (0,-1* MathF.Pow(-1, i), 0), (0,0, MathF.Pow(-1, i))),
-                    Bitmap_API.create_point(-A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), A * MathF.Pow(-1, i),
-                                            normalVactor, (0, MathF.Pow(-1, i), 0), (0, 0, MathF.Pow(-1, i))),
-                    Bitmap_API.create_point(-A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i),
-                                            normalVactor, (0,  MathF.Pow(-1, i), 0), (0, 0, -1*MathF.Pow(-1, i))),
-                    Bitmap_API.create_point(-A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i),
-                                            normalVactor, (0, -1 * MathF.Pow(-1, i), 0), (0, 0, -1*MathF.Pow(-1, i)))
+                    Bitmap_API.create_point(-A , -A , A , 
+                                            normalVactor, (0,-1, 0), (0,0, 1)),
+                    Bitmap_API.create_point(-A , A , A ,
+                                            normalVactor, (0, 1, 0), (0, 0, 1)),
+                    Bitmap_API.create_point(-A , A , -A ,
+                                            normalVactor, (0,  1, 0), (0, 0, -1)),
+                    Bitmap_API.create_point(-A, -A, -A,
+                                            normalVactor, (0, -1, 0), (0, 0, -1))
                     );
 
-                normalVactor = new float3(0, MathF.Pow(-1, i), 0);
+            normalVactor = new float3(1, 0, 0);
+            Bitmap_API.Add_rectangle(
+                Bitmap_API.create_point(A, -A, -A,
+                                        normalVactor, (0, -1, 0), (0, 0, -1)),
+                Bitmap_API.create_point(A, A, -A,
+                                        normalVactor, (0, 1, 0), (0, 0, -1)),
+                Bitmap_API.create_point(A, A, A,
+                                        normalVactor, (0, 1, 0), (0, 0, 1)),
+                Bitmap_API.create_point(A, -A, A,
+                                        normalVactor, (0, -1, 0), (0, 0, 1))
+                );
+
+            normalVactor = new float3(0, 1, 0);
                 Bitmap_API.Add_rectangle(
-                    Bitmap_API.create_point(-A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), A * MathF.Pow(-1, i),
-                                            normalVactor, (0, 0, MathF.Pow(-1, i)), (-1*MathF.Pow(-1, i), 0, 0)),
-                    Bitmap_API.create_point(A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), A * MathF.Pow(-1, i),
-                                            normalVactor, (0, 0, MathF.Pow(-1, i)), (MathF.Pow(-1, i), 0, 0)),
-                    Bitmap_API.create_point(A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i),
-                                            normalVactor, (0, 0, -1*MathF.Pow(-1, i)), (MathF.Pow(-1, i), 0, 0)),
-                    Bitmap_API.create_point(-A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i),
-                                            normalVactor, (0, 0, -1*MathF.Pow(-1, i)), (-1 * MathF.Pow(-1, i), 0, 0))
+                    Bitmap_API.create_point(-A, A, A,
+                                            normalVactor, (0, 0, 1), (-1, 0, 0)),
+                    Bitmap_API.create_point(A, A, A,
+                                            normalVactor, (0, 0, 1), (1, 0, 0)),
+                    Bitmap_API.create_point(A, A, -A,
+                                            normalVactor, (0, 0, -1), (1, 0, 0)),
+                    Bitmap_API.create_point(-A, A, -A,
+                                            normalVactor, (0, 0, -1), (-1, 0, 0))
                     );
 
-                normalVactor = new float3(0, 0, MathF.Pow(-1, i) * -1);
+            normalVactor = new float3(0, -1, 0);
+            Bitmap_API.Add_rectangle(
+                Bitmap_API.create_point(-A, -A, -A,
+                                        normalVactor, (0, 0, -1), (-1, 0, 0)),
+                Bitmap_API.create_point(A, -A, -A,
+                                        normalVactor, (0, 0, -1), (1, 0, 0)),
+                Bitmap_API.create_point(A, -A, A,
+                                        normalVactor, (0, 0, 1), (1, 0, 0)),
+                Bitmap_API.create_point(-A, -A, A,
+                                        normalVactor, (0, 0, 1), (-1, 0, 0))
+                );
+
+            normalVactor = new float3(0, 0, -1);
                 Bitmap_API.Add_rectangle(
-                    Bitmap_API.create_point(A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i),
-                                            normalVactor, (MathF.Pow(-1, i), 0, 0), (0, -1 * MathF.Pow(-1, i), 0)),
-                    Bitmap_API.create_point(A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i),
-                                            normalVactor, (MathF.Pow(-1, i), 0, 0), (0, MathF.Pow(-1, i), 0)),
-                    Bitmap_API.create_point(-A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i),
-                                            normalVactor, (-1*MathF.Pow(-1, i), 0, 0), (0, MathF.Pow(-1, i), 0)),
-                    Bitmap_API.create_point(-A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i), -A * MathF.Pow(-1, i),
-                                            normalVactor, (-1*MathF.Pow(-1, i), 0, 0), (0, -1 * MathF.Pow(-1, i), 0))
-                    );
-            }
+                    Bitmap_API.create_point(-A, -A, -A,
+                                            normalVactor, (-1, 0, 0), (0, -1 , 0)),
+                    Bitmap_API.create_point(-A, A, -A ,
+                                            normalVactor, (-1, 0, 0), (0, 1, 0)),
+                    Bitmap_API.create_point(A, A, -A,
+                                            normalVactor, (1, 0, 0), (0, 1, 0)),
+                    Bitmap_API.create_point(A, -A , -A,
+                                            normalVactor, (1, 0, 0), (0, -1, 0))
+                   );
+
+            normalVactor = new float3(0, 0, 1);
+            Bitmap_API.Add_rectangle(
+                Bitmap_API.create_point(A, -A, A,
+                                        normalVactor, (1, 0, 0), (0, -1, 0)),
+                Bitmap_API.create_point(A, A, A,
+                                        normalVactor, (1, 0, 0), (0, 1, 0)),
+                Bitmap_API.create_point(-A, A, A,
+                                        normalVactor, (-1, 0, 0), (0, 1, 0)),
+                Bitmap_API.create_point(-A, -A, A,
+                                        normalVactor, (-1, 0, 0), (0, -1, 0))
+               );
+
             return Bitmap_API.FiguresNumber - 1;
         }
 

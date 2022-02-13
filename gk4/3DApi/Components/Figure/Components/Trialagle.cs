@@ -22,6 +22,16 @@ namespace gk4
             this.a = a;
             this.b = b;
             this.c = c;
+
+        }
+
+        public Trialagle(Point3 a, Point3 b, Point3 c, float3 normalvector): this(a, b,c)
+        {
+
+            a.NormalVector = normalvector;
+            b.NormalVector = normalvector;
+            c.NormalVector = normalvector;
+
         }
 
 
@@ -120,12 +130,14 @@ namespace gk4
         public void drawMe(Color LineColor, ref Bitmap Whitheboard)
         {
             countPosition();
-
-            fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B));
-
-            drawing_lines.drawe(x1,y1,x2,y2, LineColor, ref Whitheboard);
-            drawing_lines.drawe(x2,y2,x3,y3, LineColor, ref Whitheboard);
-            drawing_lines.drawe(x3,y3,x1,y1, LineColor, ref Whitheboard);
+            if (a.NormalVector.z < 0)
+            {
+                fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B));
+            }
+                drawing_lines.drawe(x1, y1, x2, y2, LineColor, ref Whitheboard);
+                drawing_lines.drawe(x2, y2, x3, y3, LineColor, ref Whitheboard);
+                drawing_lines.drawe(x3, y3, x1, y1, LineColor, ref Whitheboard);
+            
         }
 
         public void rotate_x(float rad)

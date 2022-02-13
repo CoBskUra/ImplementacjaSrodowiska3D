@@ -53,7 +53,7 @@ namespace gk4.Matrix
 
         public static implicit operator float3(matrix<float> f3)
         {
-            if (f3.GetLength(0) != 3 || f3.GetLength(1) != 1)
+            if (f3.GetLength(0) < 3 || f3.GetLength(1) != 1)
                 throw new Exception("Matrix has incorrect dimensions");
             return new float3(f3[0, 0], f3[1, 0], f3[2, 0]);
         }

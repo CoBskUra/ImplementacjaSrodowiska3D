@@ -90,12 +90,6 @@ namespace gk4
             }
         }
 
-        
-
-
-
-
-
 
 
         public static void rotate_y(this matrix<float> M, float rad)
@@ -125,6 +119,77 @@ namespace gk4
             M.rotate_x(rad);
             M.rotate_y(rad);
             M.rotate_z(rad);
+        }
+
+
+        // obracają macierz wzglądem danej osi
+        public static void reverse_rotate_x(this matrix<float> M, float rad)
+        {
+            if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
+                throw new Exception("macierz nie jest 4x4");
+            else
+            {
+                matrix<float> rotete = new matrix<float>(4, 4);
+                rotete[0, 0] = 1;
+
+                rotete[1, 1] = MathF.Cos(rad);
+                rotete[1, 2] = MathF.Sin(rad);
+
+                rotete[2, 1] = -MathF.Sin(rad);
+                rotete[2, 2] = MathF.Cos(rad);
+
+                rotete[3, 3] = 1;
+
+                matrix<float> r = (dynamic)(M * rotete);
+                M.m = r.m;
+            }
+        }
+
+        public static void reverse_rotate_z(this matrix<float> M, float rad)
+        {
+            if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
+                throw new Exception("macierz nie jest 4x4");
+            else
+            {
+                matrix<float> rotete = new matrix<float>(4, 4);
+                rotete[0, 0] = MathF.Cos(rad);
+                rotete[0, 1] = MathF.Sin(rad);
+
+
+                rotete[1, 0] = -MathF.Sin(rad);
+                rotete[1, 1] = MathF.Cos(rad);
+
+                rotete[2, 2] = 1;
+
+                rotete[3, 3] = 1;
+
+                matrix<float> r = (dynamic)(M * rotete);
+                M.m = r.m;
+            }
+        }
+
+
+
+        public static void reverse_rotate_y(this matrix<float> M, float rad)
+        {
+            if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
+                throw new Exception("macierz nie jest 4x4");
+            else
+            {
+                matrix<float> rotete = new matrix<float>(4, 4);
+                rotete[0, 0] = MathF.Cos(rad);
+                rotete[0, 2] = MathF.Sin(rad);
+
+                rotete[1, 1] = 1;
+
+                rotete[2, 0] = -MathF.Sin(rad);
+                rotete[2, 2] = MathF.Cos(rad);
+
+                rotete[3, 3] = 1;
+
+                matrix<float> r = (M * rotete);
+                M.m = r.m;
+            }
         }
 
     }

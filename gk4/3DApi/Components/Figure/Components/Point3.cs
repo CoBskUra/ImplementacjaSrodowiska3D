@@ -123,6 +123,33 @@ namespace gk4.Shapes
             return vector;
         }
 
+        public float3 NormalVector
+        {
+            get
+            {
+                matrix<float> tmp = new matrix<float>(4, 1);
+
+                tmp.m[0, 0] = normal_vector.x + RotationCenter.x;
+                tmp.m[1, 0] = normal_vector.y + RotationCenter.y;
+                tmp.m[2, 0] = normal_vector.z + RotationCenter.z;
+                tmp.m[3, 0] = 0;
+
+                var M = reverseMatrixRotation();
+                tmp = M * tmp;
+                tmp[0, 0] -= RotationCenter.x;
+                tmp[1, 0] -= RotationCenter.y;
+                tmp[2, 0] -= RotationCenter.z;
+
+                Debug.WriteLine(tmp.ToString());
+
+                return tmp;
+            }
+            set
+            {
+                normal_vector = value;
+            }
+        }
+
 
         public float3 Coordinates
         {
@@ -206,7 +233,7 @@ namespace gk4.Shapes
                 tmp.m[2, 0] = coordinates.z + RotationCenter.z;
                 tmp.m[3, 0] = coordinates.g;
 
-                var M = make_rotations();
+                var M = RotationMatrix();
                 tmp = M * tmp;
                 tmp[0, 0] -= RotationCenter.x;
                 tmp[1, 0] -= RotationCenter.y;
@@ -224,7 +251,7 @@ namespace gk4.Shapes
 
 
 
-        public matrix<float> make_rotations()
+        public matrix<float> RotationMatrix()
         {
             matrix<float> P = new matrix<float>(4, 4);
             P[0, 0] = 1;
@@ -247,8 +274,37 @@ namespace gk4.Shapes
 
         }
 
+        public matrix<float> reverseMatrixRotation()
+        {
+            matrix<float> M = new matrix<float> (4, 4);
+            M.ReduceToDiagonal();
+            M.reverse_rotate_z(Rads.x);
+            M.reverse_rotate_y(Rads.y);
+            M.reverse_rotate_x(Rads.z);
+            matrix<float> P = new matrix<float>(4, 4);
+            P[0, 0] = 1;
+            P[1, 1] = 1;
+            P[2, 2] = 1;
+            P[3, 3] = 1;
+            matrix<float> T = new matrix<float>(4, 4);
+            T[0, 0] = 1;
+            T[1, 1] = 1;
+            T[2, 2] = 1;
+            T[3, 3] = 1;
+            T[0, 3] = -1;
+            T[1, 3] = -1;
+            T[2, 3] = -1;
 
-        
+            M = M * T * P;
+            
+            M.Transform();
+
+            return M;
+
+        }
+
+
+
 
 
     }

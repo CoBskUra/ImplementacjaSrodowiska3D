@@ -173,9 +173,20 @@ namespace g4
             }
         }
 
+        public void Transform()
+        {
+            T[,] transformMatrix = new T[this.GetLength(1), this.GetLength(0)];
+            for(int i = 0; i<this.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.GetLength(1); j++)
+                {
+                    transformMatrix[j,i] = this[i, j];
+                }
+            }
+            this.m = transformMatrix;
+        }
 
-        
 
-        
+
     }
 }

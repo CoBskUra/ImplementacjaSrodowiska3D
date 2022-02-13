@@ -26,7 +26,7 @@ namespace gk4._3DApi.Drarwing_on_bitmap
                                             normalVactor, (0, -1 * MathF.Pow(-1, i), 0), (0, 0, -1*MathF.Pow(-1, i)))
                     );
 
-                
+                normalVactor = new float3(0, MathF.Pow(-1, i), 0);
                 Bitmap_API.Add_rectangle(
                     Bitmap_API.create_point(-A * MathF.Pow(-1, i), A * MathF.Pow(-1, i), A * MathF.Pow(-1, i),
                                             normalVactor, (0, 0, MathF.Pow(-1, i)), (-1*MathF.Pow(-1, i), 0, 0)),

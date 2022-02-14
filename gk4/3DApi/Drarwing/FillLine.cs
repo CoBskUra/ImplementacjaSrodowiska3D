@@ -1,5 +1,6 @@
 ﻿using gk4._3DApi.Components.Objects;
 using gk4._3DApi.Components.Objects.Components;
+using gk4.Matrix;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -46,7 +47,10 @@ namespace gk4._3DApi.Drarwing
 
         private void fillLineConstant(int x1, int x2, int y, ref Bitmap whitheBoard, Color c)
         {
-            
+            float4 ambient = Material.ambient * lights[0].ambient;
+            ambient *= 255;
+            Color newColor = Color.FromArgb((int)ambient.x, (int)ambient.y, (int)ambient.z, (int)ambient.g);
+            fillLineNone(x1, x2, y, ref whitheBoard, newColor);
         }
 
         private void fillLineGouraud(int x1, int x2, int y, ref Bitmap whitheBoard, Color c)

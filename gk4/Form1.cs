@@ -45,7 +45,7 @@ namespace gk4
             {
                 Api3D.Transform(0, 1, 0);
                 int i = Api3D.Sphere(0.6f, 6, 5);
-
+                Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
             }
 
             Api3D.Create_New_Figure();
@@ -54,6 +54,7 @@ namespace gk4
                 int i = Api3D.Squer(0.5f);
                 Api3D[i].Rotation_Center = (-1, -1f, 0);
                 Api3D[i].LineColor = Color.White;
+                Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
             }
 
             Api3D.Create_New_Figure();
@@ -62,6 +63,7 @@ namespace gk4
                 int i = Api3D.Sphere(1f, 10, 10);
                 Api3D[i].Rotation_Center = (-1, -1f, 0);
                 Api3D[i].LineColor = Color.Green;
+                Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
             }
 
             Api3D.Create_New_Figure();
@@ -69,6 +71,7 @@ namespace gk4
                 Api3D.Transform(0, 0, 0);
                 int i = Api3D.Squer(0.5f);
                 Api3D[i].LineColor = Color.Yellow;
+                Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
             }
 
             Api3D.Create_New_Figure();

@@ -38,6 +38,25 @@ namespace gk4.Matrix
             }
         }
 
+        public static void Normalization_4x1(this Matrix<float> m)
+        {
+            if (m.GetLength(1) != 1 || m.GetLength(0) != 3)
+                throw new Exception("macierz nie jest 3x1");
+            else
+            {
+                float norma = MathF.Sqrt(
+                    MathF.Pow(m[0, 0], 2) +
+                    MathF.Pow(m[1, 0], 2) +
+                    MathF.Pow(m[2, 0], 2) +
+                    MathF.Pow(m[3, 0], 2));
+
+                m[0, 0] /= norma;
+                m[1, 0] /= norma;
+                m[2, 0] /= norma;
+                m[3, 0] /= norma;
+            }
+        }
+
 
         // obracają macierz wzglądem danej osi
         public static void rotate_x(this Matrix<float> M, float rad)

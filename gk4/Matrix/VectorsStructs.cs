@@ -74,6 +74,21 @@ namespace gk4.Matrix
     {
         public float x, y, z, g;
 
+        public static float4 operator -(float4 a, float4 b)
+        {
+            return new float4(a.x - b.x, a.y - b.y, a.z - b.z, a.g - b.g);
+        }
+
+        public static float4 operator +(float4 a, float4 b)
+        {
+            return new float4(a.x + b.x, a.y + b.y, a.z + b.z, a.g + b.g);
+        }
+
+        public static float4 operator /(float4 a, float b)
+        {
+            return new float4(a.x / b, a.y / b, a.z / b, a.g/b);
+        }
+
         public float4(float a, float b, float c, float d)
         {
             x = a; y = b; z = c; g = d;

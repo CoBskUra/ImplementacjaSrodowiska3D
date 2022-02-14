@@ -5,6 +5,7 @@ using gk4._3DApi.Components.Objects.Components;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using gk4._3DApi.Drarwing;
 
 namespace gk4._3DApi
 {

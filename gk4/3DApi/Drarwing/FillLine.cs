@@ -1,11 +1,9 @@
-﻿using System;
+﻿using gk4._3DApi.Components.Objects;
+using gk4._3DApi.Components.Objects.Components;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace gk4._3DApi.Components.Objects.Components
+namespace gk4._3DApi.Drarwing
 {
     public class FillLine
     {

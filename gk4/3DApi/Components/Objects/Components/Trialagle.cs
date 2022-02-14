@@ -10,17 +10,19 @@ namespace gk4._3DApi.Components.Objects.Components
     {
         public Point3 a,b,c;
         int x1, y1, x2, y2, x3, y3; // pozycja odpowiednich punktów na bitmapie
+        public FillLine FillLine;
+        public float3 TrialagleCenter => (a.visableCoordinates + b.visableCoordinates + c.visableCoordinates) / 3;
 
-        public Trialagle(Point3 a, Point3 b, Point3 c)
+        public Trialagle(Point3 a, Point3 b, Point3 c, FillLine fillLine)
         { 
-
             this.a = a;
             this.b = b;
             this.c = c;
+            this.FillLine = fillLine;
 
         }
 
-        public Trialagle(Point3 a, Point3 b, Point3 c, float3 normalvector): this(a, b,c)
+        public Trialagle(Point3 a, Point3 b, Point3 c, FillLine fillLine, float3 normalvector): this(a, b,c, fillLine)
         {
 
             a.NormalVector = normalvector;
@@ -52,24 +54,7 @@ namespace gk4._3DApi.Components.Objects.Components
             }
         }
 
-        public void fillLine(int x1, int x2, int y, ref Bitmap whitheBoard, Color c)
-        {
-            if (y < 0 || y >= whitheBoard.Height)
-                return;
-            if (x1>x2)
-            {
-                var tmp = x1;
-                x1 = x2;
-                x2 = tmp;
-            }
-
-            if (x2 >= whitheBoard.Width)
-                x2 = whitheBoard.Width-1;
-            for (int i = x1>0? x1:0; i <= x2; i++)
-            {
-                whitheBoard.SetPixel(i, y, c);
-            }
-        }
+        
 
 
         private void fill_me(ref Bitmap Whitheboard, Color c, Material material, ShadingOption shading, List<Light> lights)
@@ -89,11 +74,14 @@ namespace gk4._3DApi.Components.Objects.Components
             double theLowestTheHighestSkalar = ((double)theHighest.x - (double)theLowest.x) / (double)TheLowestTheHighests_Highte;
             double MediumTheHighestsSkalar = ((double)theHighest.x - (double)medium.x) / (double)MediumTheHighests_Highte;
 
+            FillLine.shading = shading;
+            FillLine.trialagleToFill = this;
+
             if (TheLowestTheHighests_Highte != 0 && theLowestMedium_Highte != 0)
             {
                 for (int i = 0; i <= theLowestMedium_Highte; i++)
                 {
-                    fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
+                    FillLine.fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
                                 (int)(theLowest.x + theLowestMediumSkalar * i),
                                 i + theLowest.y,
                                 ref Whitheboard, c);
@@ -104,7 +92,7 @@ namespace gk4._3DApi.Components.Objects.Components
             {
                 for (int i = theLowestMedium_Highte; i <= TheLowestTheHighests_Highte; i++)
                 {
-                    fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
+                    FillLine.fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
                                 (int)(medium.x + MediumTheHighestsSkalar * (i - theLowestMedium_Highte)),
                                 i + theLowest.y,
                                 ref Whitheboard, c);

@@ -37,7 +37,7 @@ namespace gk4._3DApi.Components.Objects
         public Color LineColor;
         public List<Trialagle> Trialagles = new List<Trialagle>();
         public Material Material = new Material(Color.Red, Color.Red, Color.Red, 0.1f);
-        public ShadingOption shading = ShadingOption.None;
+        public ShadingOption Shading = ShadingOption.None;
 
         private float3 Rads => Trialagles[0].a.Rads;
 
@@ -50,10 +50,12 @@ namespace gk4._3DApi.Components.Objects
         // rysuje figure
         public void drawMe(ref Bitmap Whitheboard, List<Light> lights)
         {
+            foreach(Light light in lights)
+                light.Shading = ShadingOption.None;
 
             foreach (var t in Trialagles)
             {
-                t.drawMe(LineColor, ref Whitheboard, Material, shading, lights);
+                t.drawMe(LineColor, ref Whitheboard, Material, Shading, lights);
             }
         }
 

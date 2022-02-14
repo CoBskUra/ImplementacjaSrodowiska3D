@@ -28,7 +28,7 @@ namespace gk4._3DApi
 
 
         private float3 Transformation;
-
+        private FillLine FillLine = new FillLine();
         public Camera Camera;
         
 
@@ -53,6 +53,7 @@ namespace gk4._3DApi
             Max_z = 100;
             Max_x = w.Width;
             Max_y = w.Height;
+            FillLine.lights = Lights;
         }
 
         public void Transform(float x, float y, float z)
@@ -105,9 +106,9 @@ namespace gk4._3DApi
         public void Add_Trialagle(Point3 a, Point3 b, Point3 c, float3? normalvector = null)
         {
             if (normalvector == null)
-                Add(new Trialagle(a, b, c));
+                Add(new Trialagle(a, b, c, FillLine));
             else
-                Add(new Trialagle(a, b, c, (float3)normalvector));
+                Add(new Trialagle(a, b, c, FillLine, (float3)normalvector));
         }
 
         // rysuje wybraną figure

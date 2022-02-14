@@ -1,10 +1,11 @@
-﻿using gk4._3DApi.Components;
-using gk4._3DApi.Drarwing_on_bitmap;
+﻿
+using gk4._3DApi.Drarwing;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using gk4.Matrix;
+using gk4._3DApi;
 
 namespace gk4
 {

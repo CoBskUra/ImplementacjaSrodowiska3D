@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 
-namespace gk4
+namespace gk4._3DApi.Drarwing
 {
     public static class drawing_lines
     {

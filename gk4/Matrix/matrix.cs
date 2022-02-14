@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace g4
+namespace gk4.Matrix
 {
 
     public class matrix<T> where T : IComparable

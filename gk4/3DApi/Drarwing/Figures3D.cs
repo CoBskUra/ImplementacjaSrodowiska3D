@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 
-namespace gk4._3DApi.Drarwing_on_bitmap
+namespace gk4._3DApi.Drarwing
 {
     public static class Figures3D
     {

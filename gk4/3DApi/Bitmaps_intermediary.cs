@@ -1,13 +1,12 @@
-﻿using g4;
+﻿using gk4.Matrix;
 using gk4._3DApi.Components;
 using gk4._3DApi.Components.Objects;
 using gk4._3DApi.Components.Objects.Components;
-using gk4.Matrix;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace gk4
+namespace gk4._3DApi
 {
     
     public enum objectType

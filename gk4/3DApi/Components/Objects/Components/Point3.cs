@@ -1,12 +1,7 @@
-﻿using g4;
-using gk4._3DApi.Components;
+﻿
 using gk4.Matrix;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace gk4._3DApi.Components.Objects.Components
 {

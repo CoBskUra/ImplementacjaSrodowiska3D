@@ -11,6 +11,7 @@ namespace gk4._3DApi.Components.Objects.Components
         public Point3 a,b,c;
         int x1, y1, x2, y2, x3, y3; // pozycja odpowiednich punktów na bitmapie
         public float3 TrialagleCenter => (a.visableCoordinates + b.visableCoordinates + c.visableCoordinates) / 3;
+        public float3 TrialagleCenterInWorld => (a.WorldCoordinates + b.WorldCoordinates + c.WorldCoordinates) / 3;
 
         public Trialagle(Point3 a, Point3 b, Point3 c)
         { 
@@ -105,7 +106,7 @@ namespace gk4._3DApi.Components.Objects.Components
             x3 = c.x_parm_on_bitmap; y3 = c.y_parm_on_bitmap;
         }
 
-        private float3 normalVector =>  MatrixTransformationNeededTo3DModeling.cross_product(
+        public float3 normalVector =>  MatrixTransformationNeededTo3DModeling.cross_product(
                 b.visableCoordinates - a.visableCoordinates,
                 c.visableCoordinates - a.visableCoordinates
                 );

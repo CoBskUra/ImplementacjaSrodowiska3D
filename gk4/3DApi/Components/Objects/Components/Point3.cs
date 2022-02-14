@@ -29,9 +29,8 @@ namespace gk4._3DApi.Components.Objects.Components
             FigureCenter = transform;
             CurenntFigureCenter = FigureCenter;
             RotationCenter = FigureCenter;
-            visableCoordinates.x = coordinates.x;
-            visableCoordinates.y = coordinates.y;
-            visableCoordinates.z = coordinates.z;
+            visableCoordinates = (float3)coordinates;
+            WorldCoordinates = (float3)coordinates;
             CameraPointer = c;
         }
 
@@ -43,6 +42,7 @@ namespace gk4._3DApi.Components.Objects.Components
         private float4 coordinates;
 
         public float3 visableCoordinates;
+        public float3 WorldCoordinates;
 
         // rotacja o dany kąt 
         public float3 Rads;
@@ -106,6 +106,11 @@ namespace gk4._3DApi.Components.Objects.Components
             var vector = this.RotatedCordinates;
 
             vector = Camera.View * vector;
+
+            WorldCoordinates.x = vector[0, 0];
+            WorldCoordinates.y = vector[1, 0];
+            WorldCoordinates.z = vector[2, 0];
+
             vector = Camera.Proj * vector;
             vector /= vector[3, 0];
 

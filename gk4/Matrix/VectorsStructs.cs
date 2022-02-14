@@ -51,6 +51,11 @@ namespace gk4.Matrix
             return (f3.x, f3.y, f3.z);
         }
 
+        public static explicit operator float4(float3 a)
+        {
+            return new float4(a.x, a.y, a.z, 0);
+        }
+
 
         public static implicit operator Matrix<float>(float3 f3)
         {
@@ -67,6 +72,8 @@ namespace gk4.Matrix
                 throw new Exception("Matrix has incorrect dimensions");
             return new float3(f3[0, 0], f3[1, 0], f3[2, 0]);
         }
+
+
 
     }
 
@@ -109,6 +116,11 @@ namespace gk4.Matrix
             return new float4(krotka.a, krotka.b, krotka.c, krotka.d);
         }
 
+        public static explicit operator float3(float4 a)
+        {
+            return new float3(a.x, a.y, a.z);
+        }
+
         public static implicit operator (float a, float b, float c, float d)(float4 f4)
         {
             return (f4.x, f4.y, f4.z, f4.g);
@@ -133,15 +145,11 @@ namespace gk4.Matrix
 
     }
     
-    public static class krotki
+    public static class floats
     {
-        public static Matrix<float> Diffrence((float x, float y, float z) a, (float x, float y, float z) b)
+        public static float Cos(float4 a, float4 b)
         {
-            Matrix<float> result = new Matrix<float>(3, 1);
-            result[0, 0] = a.x - b.x;
-            result[1, 0] = a.y - b.y;
-            result[2, 0] = a.z - b.z;
-            return result;
+            return a.x * b.x + a.y * b.y + a.z * b.z + a.g * b.g;
         }
     }
 

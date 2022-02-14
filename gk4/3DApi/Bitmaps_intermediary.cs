@@ -59,6 +59,7 @@ namespace gk4._3DApi
             Max_x = w.Width;
             Max_y = w.Height;
             FillLine.lights = Lights;
+            FillLine.cameraPointer = CameraPointer;
         }
 
         public void Transform(float x, float y, float z)

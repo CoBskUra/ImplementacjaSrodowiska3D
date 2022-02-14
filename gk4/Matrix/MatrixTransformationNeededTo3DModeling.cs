@@ -40,8 +40,8 @@ namespace gk4.Matrix
 
         public static void Normalization_4x1(this Matrix<float> m)
         {
-            if (m.GetLength(1) != 1 || m.GetLength(0) != 3)
-                throw new Exception("macierz nie jest 3x1");
+            if (m.GetLength(1) != 1 || m.GetLength(0) != 4)
+                throw new Exception("macierz nie jest 4x1");
             else
             {
                 float norma = MathF.Sqrt(

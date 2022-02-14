@@ -77,7 +77,7 @@ namespace gk4._3DApi.Components
             }
         }
 
-        public (float x, float y, float z) Position
+        public float3 Position
         {
             set
             {
@@ -89,11 +89,11 @@ namespace gk4._3DApi.Components
             }
             get
             {
-                return (Position.x, Position.y, Position.z);
+                return POSITION;
             }
         }
 
-        public (float x, float y, float z) LookAt
+        public float3 LookAt
         {
             set
             {

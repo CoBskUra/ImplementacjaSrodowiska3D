@@ -18,26 +18,26 @@ namespace gk4
         int direction = 1;
 
         Bitmaps_intermediary Api3D;
-        Camera folowing, stationary, staring;
+        Camera FolowingCamera, StationaryCamera, StaringCamera;
 
 
         public Form1()
         {
             InitializeComponent();
             Api3D = new Bitmaps_intermediary(whithreboard, whitheboardBox);
-            stationary = Api3D.Create_Camera(0, 3, -5,
+            StationaryCamera = Api3D.Create_Camera(0, 3, -5,
                                                 0, 0, 0,
                                                 1, 20,
                                                 MathF.PI / 4);
-            folowing = Api3D.Create_Camera(0, 3, -5,
+            FolowingCamera = Api3D.Create_Camera(0, 3, -5,
                                                 0, 0, 0,
                                                 1, 20,
                                                 MathF.PI / 4);
-            staring = Api3D.Create_Camera(-2, -4, 7,
+            StaringCamera = Api3D.Create_Camera(-2, -4, 7,
                                                 0, 0, 0,
                                                 1, 20,
                                                 MathF.PI / 4);
-            Api3D.Camera = stationary;
+            Api3D.Camera = StationaryCamera;
 
 
 
@@ -108,29 +108,30 @@ namespace gk4
             Api3D[0].Rotation_Center = ((float)direction / 2, -(float)direction / 3, (float)direction);
             Api3D[0].rotate_y(MathF.PI / d);
             //Api3D[0].Move(-moveTo, moveTo, 0);
-            staring.LookAt = Api3D[0].FigureCenter;
+            StaringCamera.LookAt = Api3D[0].FigureCenter;
+            FolowingCamera.LookAt = Api3D[0].FigureCenter;
+            float3 oldPosition = Api3D[0].FigureCenter;
             //this.Text = Api3D[0].FigureCenter.ToString();
-            Api3D.Camera.LookAt = Api3D[0].FigureCenter;
 
 
             Api3D.drawAll();
-
+            FolowingCamera.Position = FolowingCamera.Position + Api3D[0].FigureCenter - oldPosition;
 
         }
 
         private void CameraButtonStationary_Click(object sender, EventArgs e)
         {
-            Api3D.Camera = stationary;
+            Api3D.Camera = StationaryCamera;
         }
 
         private void CameraStaringButton_Click(object sender, EventArgs e)
         {
-            Api3D.Camera = staring;
+            Api3D.Camera = StaringCamera;
         }
 
         private void CameraFolowingButton_Click(object sender, EventArgs e)
         {
-            Api3D.Camera = folowing;
+            Api3D.Camera = FolowingCamera;
         }
 
         private void button1_Click(object sender, EventArgs e)

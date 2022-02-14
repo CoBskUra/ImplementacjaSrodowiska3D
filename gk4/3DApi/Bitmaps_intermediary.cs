@@ -115,7 +115,7 @@ namespace gk4._3DApi
         // rysuje wybraną figure
         private void drawFigure(int i)
         {
-            Figures[i].drawMe(ref Whitheboard, Lights, FillLine);
+            Figures[i].drawMe(ref Whitheboard, FillLine);
         }
 
 

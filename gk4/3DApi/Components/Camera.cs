@@ -3,6 +3,11 @@ using System;
 
 namespace gk4._3DApi.Components
 {
+    public class CameraPointer
+    {
+        public Camera Camera;
+    }
+
     public class Camera
     {
         private Matrix<float> VIEW = new Matrix<float>(4, 4);

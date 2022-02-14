@@ -9,13 +9,14 @@ namespace gk4._3DApi.Components.Objects.Components
     // punkt w przestrzeni 3d
     public struct Point3
     {
-        public Camera Camera;
+        public CameraPointer CameraPointer;
+        public Camera Camera => this.CameraPointer.Camera;
 
         public Point3(float4 coordinates,
                         float3 normalvector, float3 tangentialVector, float3 binormal,
                         int mx, int my, int mz,
                         float3 transform,
-                        Camera c)
+                        CameraPointer c)
         {
             this.coordinates = coordinates;
             this.normal_vector = normalvector;
@@ -31,7 +32,7 @@ namespace gk4._3DApi.Components.Objects.Components
             visableCoordinates.x = coordinates.x;
             visableCoordinates.y = coordinates.y;
             visableCoordinates.z = coordinates.z;
-            Camera = c;
+            CameraPointer = c;
         }
 
         // wymiary przestrzeni 3d

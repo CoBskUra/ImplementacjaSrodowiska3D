@@ -32,8 +32,13 @@ namespace gk4
             this.components = new System.ComponentModel.Container();
             this.whitheboardBox = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.StartStop_Button = new System.Windows.Forms.Button();
+            this.CameraButtonStationary = new System.Windows.Forms.Button();
+            this.CameraStaringButton = new System.Windows.Forms.Button();
+            this.CameraFolowingButton = new System.Windows.Forms.Button();
+            this.Cameras = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.whitheboardBox)).BeginInit();
+            this.Cameras.SuspendLayout();
             this.SuspendLayout();
             // 
             // whitheboardBox
@@ -52,15 +57,57 @@ namespace gk4
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button1
+            // StartStop_Button
             // 
-            this.button1.Location = new System.Drawing.Point(13, 94);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 29);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.StartStop_Button.Location = new System.Drawing.Point(12, 12);
+            this.StartStop_Button.Name = "StartStop_Button";
+            this.StartStop_Button.Size = new System.Drawing.Size(148, 36);
+            this.StartStop_Button.TabIndex = 1;
+            this.StartStop_Button.Text = "Start";
+            this.StartStop_Button.UseVisualStyleBackColor = true;
+            this.StartStop_Button.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // CameraButtonStationary
+            // 
+            this.CameraButtonStationary.Location = new System.Drawing.Point(6, 37);
+            this.CameraButtonStationary.Name = "CameraButtonStationary";
+            this.CameraButtonStationary.Size = new System.Drawing.Size(136, 29);
+            this.CameraButtonStationary.TabIndex = 2;
+            this.CameraButtonStationary.Text = "Nieruchoma";
+            this.CameraButtonStationary.UseVisualStyleBackColor = true;
+            this.CameraButtonStationary.Click += new System.EventHandler(this.CameraButtonStationary_Click);
+            // 
+            // CameraStaringButton
+            // 
+            this.CameraStaringButton.Location = new System.Drawing.Point(6, 72);
+            this.CameraStaringButton.Name = "CameraStaringButton";
+            this.CameraStaringButton.Size = new System.Drawing.Size(136, 29);
+            this.CameraStaringButton.TabIndex = 3;
+            this.CameraStaringButton.Text = "Wpatrująca się";
+            this.CameraStaringButton.UseVisualStyleBackColor = true;
+            this.CameraStaringButton.Click += new System.EventHandler(this.CameraStaringButton_Click);
+            // 
+            // CameraFolowingButton
+            // 
+            this.CameraFolowingButton.Location = new System.Drawing.Point(6, 107);
+            this.CameraFolowingButton.Name = "CameraFolowingButton";
+            this.CameraFolowingButton.Size = new System.Drawing.Size(136, 29);
+            this.CameraFolowingButton.TabIndex = 4;
+            this.CameraFolowingButton.Text = "Podążająca";
+            this.CameraFolowingButton.UseVisualStyleBackColor = true;
+            this.CameraFolowingButton.Click += new System.EventHandler(this.CameraFolowingButton_Click);
+            // 
+            // Cameras
+            // 
+            this.Cameras.Controls.Add(this.CameraButtonStationary);
+            this.Cameras.Controls.Add(this.CameraFolowingButton);
+            this.Cameras.Controls.Add(this.CameraStaringButton);
+            this.Cameras.Location = new System.Drawing.Point(12, 96);
+            this.Cameras.Name = "Cameras";
+            this.Cameras.Size = new System.Drawing.Size(148, 154);
+            this.Cameras.TabIndex = 5;
+            this.Cameras.TabStop = false;
+            this.Cameras.Text = "Kamery";
             // 
             // Form1
             // 
@@ -68,12 +115,14 @@ namespace gk4
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(951, 627);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Cameras);
+            this.Controls.Add(this.StartStop_Button);
             this.Controls.Add(this.whitheboardBox);
             this.Name = "Form1";
             this.Text = "Form1";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.whitheboardBox)).EndInit();
+            this.Cameras.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -82,7 +131,11 @@ namespace gk4
 
         private System.Windows.Forms.PictureBox whitheboardBox;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button StartStop_Button;
+        private System.Windows.Forms.Button CameraButtonStationary;
+        private System.Windows.Forms.Button CameraStaringButton;
+        private System.Windows.Forms.Button CameraFolowingButton;
+        private System.Windows.Forms.GroupBox Cameras;
     }
 }
 

@@ -30,8 +30,12 @@ namespace gk4._3DApi
 
         private float3 Transformation;
         private FillLine FillLine = new FillLine();
-        public Camera Camera;
-        
+        private CameraPointer CameraPointer = new CameraPointer();
+        public Camera Camera
+        {
+            get { return CameraPointer.Camera; }
+            set { CameraPointer.Camera = value; }
+        }
 
         // zbiór figur, każda figura zawiera sie w zbiorze krawędzi
         List<Figure> Figures = new List<Figure>();
@@ -82,7 +86,7 @@ namespace gk4._3DApi
                 (x - Transformation.x, y - Transformation.y, z - Transformation.z, 1),
                 normalvector, tangentialVector, binormal,
                 Max_x, Max_y, Max_z, 
-                Transformation, Camera
+                Transformation, CameraPointer
                 );
         }
 
@@ -92,7 +96,7 @@ namespace gk4._3DApi
                 (point.x - Transformation.x, point.y - Transformation.y, point.z - Transformation.z, 1),
                 normalvector, tangentialVector, binormal,
                 Max_x, Max_y, Max_z,
-                Transformation, Camera
+                Transformation, CameraPointer
                 );
         }
 

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Threading;
 using gk4.Matrix;
 using gk4._3DApi;
+using gk4._3DApi.Components;
 
 namespace gk4
 {
@@ -17,15 +18,26 @@ namespace gk4
         int direction = 1;
 
         Bitmaps_intermediary Api3D;
+        Camera folowing, stationary, staring;
+
 
         public Form1()
         {
             InitializeComponent();
             Api3D = new Bitmaps_intermediary(whithreboard, whitheboardBox);
-            Api3D.Camera = Api3D.Create_Camera(0, 3, -5,
+            stationary = Api3D.Create_Camera(0, 3, -5,
                                                 0, 0, 0,
                                                 1, 20,
-                                                MathF.PI/4);
+                                                MathF.PI / 4);
+            folowing = Api3D.Create_Camera(0, 3, -5,
+                                                0, 0, 0,
+                                                1, 20,
+                                                MathF.PI / 4);
+            staring = Api3D.Create_Camera(-2, -4, 7,
+                                                0, 0, 0,
+                                                1, 20,
+                                                MathF.PI / 4);
+            Api3D.Camera = stationary;
 
 
 
@@ -96,7 +108,7 @@ namespace gk4
             Api3D[0].Rotation_Center = ((float)direction / 2, -(float)direction / 3, (float)direction);
             Api3D[0].rotate_y(MathF.PI / d);
             //Api3D[0].Move(-moveTo, moveTo, 0);
-
+            staring.LookAt = Api3D[0].FigureCenter;
             //this.Text = Api3D[0].FigureCenter.ToString();
             Api3D.Camera.LookAt = Api3D[0].FigureCenter;
 
@@ -106,9 +118,25 @@ namespace gk4
 
         }
 
+        private void CameraButtonStationary_Click(object sender, EventArgs e)
+        {
+            Api3D.Camera = stationary;
+        }
+
+        private void CameraStaringButton_Click(object sender, EventArgs e)
+        {
+            Api3D.Camera = staring;
+        }
+
+        private void CameraFolowingButton_Click(object sender, EventArgs e)
+        {
+            Api3D.Camera = folowing;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Enabled = !timer1.Enabled;
+            StartStop_Button.Text = StartStop_Button.Text == "Start" ? "Stop" : "Start";
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

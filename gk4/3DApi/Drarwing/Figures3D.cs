@@ -1,5 +1,5 @@
-﻿using gk4.Matrix;
-using gk4.Shapes;
+﻿using gk4._3DApi.Components.Objects.Components;
+using gk4.Matrix;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -84,7 +84,7 @@ namespace gk4._3DApi.Drarwing_on_bitmap
                                         normalVactor, (-1, 0, 0), (0, -1, 0))
                );
 
-            return Bitmap_API.FiguresNumber - 1;
+            return Bitmap_API.ObjectID;
         }
 
         
@@ -162,7 +162,7 @@ namespace gk4._3DApi.Drarwing_on_bitmap
 
             
 
-            return Bitmap_Api.FiguresNumber - 1;
+            return Bitmap_Api.ObjectID;
         }
 
         private static Point3 MakePointOnSphere(float Psi, float Phi, float R, Bitmaps_intermediary Bitmap_Api)

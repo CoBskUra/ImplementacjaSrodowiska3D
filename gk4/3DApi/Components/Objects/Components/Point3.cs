@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gk4.Shapes
+namespace gk4._3DApi.Components.Objects.Components
 {
     
     // punkt w przestrzeni 3d

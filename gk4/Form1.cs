@@ -21,33 +21,35 @@ namespace gk4
         {
             InitializeComponent();
             Api3D = new Bitmaps_intermediary(whithreboard, whitheboardBox);
-            Api3D.Camera = Api3D.Create_Camera(0, 0, -5,
+            Api3D.Camera = Api3D.Create_Camera(0, 3, -5,
                                                 0, 0, 0,
-                                                10, 20,
+                                                1, 20,
                                                 MathF.PI/4);
 
-            //Api3D.Create_New_Figure();
-            //{
-            //    Api3D.Transform(0, 1, 0);
-            //    int i = Api3D.Sphere(0.6f, 6, 5);
 
-            //}
 
-            //Api3D.Create_New_Figure();
-            //{
-            //    Api3D.Transform(0, 0, 0);
-            //    int i = Api3D.Squer(0.5f);
-            //    Api3D[i].Rotation_Center = (-1, -1f, 0);
-            //    Api3D[i].LineColor = Color.White;
-            //}
+            Api3D.Create_New_Figure();
+            {
+                Api3D.Transform(0, 1, 0);
+                int i = Api3D.Sphere(0.6f, 6, 5);
 
-            //Api3D.Create_New_Figure();
-            //{
-            //    Api3D.Transform(0, 0, 0);
-            //    int i = Api3D.Sphere(1f, 3, 3);
-            //    //Api3D[i].Rotation_Center = (-1, -1f, 0);
-            //    Api3D[i].LineColor = Color.Green;
-            //}
+            }
+
+            Api3D.Create_New_Figure();
+            {
+                Api3D.Transform(0, 0, 0);
+                int i = Api3D.Squer(0.5f);
+                Api3D[i].Rotation_Center = (-1, -1f, 0);
+                Api3D[i].LineColor = Color.White;
+            }
+
+            Api3D.Create_New_Figure();
+            {
+                Api3D.Transform(0, 0, 0);
+                int i = Api3D.Sphere(1f, 10, 10);
+                Api3D[i].Rotation_Center = (-1, -1f, 0);
+                Api3D[i].LineColor = Color.Green;
+            }
 
             Api3D.Create_New_Figure();
             {
@@ -56,13 +58,21 @@ namespace gk4
                 Api3D[i].LineColor = Color.Yellow;
             }
 
-            //Api3D.Create_New_Figure();
-            //{
-            //    Api3D.Transform(0.4327f, 0, 0);
-            //    int i = Api3D.Squer(0.5f);
-            //    Api3D[i].Rotation_Center = (1, 5, 0);
-            //    Api3D[i].LineColor = Color.Beige;
-            //}
+            Api3D.Create_New_Figure();
+            {
+                Api3D.Transform(0.4327f, 0, 0);
+                int i = Api3D.Squer(0.5f);
+                Api3D[i].Rotation_Center = (1, 5, 0);
+                Api3D[i].LineColor = Color.Beige;
+            }
+
+            Api3D.Create_New_Lighte();
+            {
+                Api3D.Transform(0, 0, 0);
+                int i = Api3D.Sphere(0.5f, 4,4);
+                Api3D.GetLighte(i).SetVarbles(1, 0.09f, 0.032f, Color.Yellow, Color.Ivory, Color.Red);
+                Api3D.GetLighte(i).LineColor = Color.Red;
+            }
 
             Api3D.drawAll();
         }

@@ -1,4 +1,5 @@
-﻿using gk4.Matrix;
+﻿using gk4._3DApi.Components.Objects.Components;
+using gk4.Matrix;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,13 +8,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gk4.Shapes
+namespace gk4._3DApi.Components.Objects
 {
+    public class Material
+    {
+        public Color specular;
+        public Color diffuse;
+        public Color ambient;
+        public float shininess;
+
+        public Material(Color specular, Color diffuse, Color ambient, float shininess)
+        {
+            this.specular = specular;  
+            this.diffuse = diffuse; 
+            this.ambient = ambient; 
+            this.shininess = shininess;
+        }
+    }
+
+    public enum ShadingOption
+    {
+        None,
+        Constant,
+        Gouraud,
+        Phonge
+    }
+
     public class Figure
     {
 
         public Color LineColor;
         public List<Trialagle> Trialagles = new List<Trialagle>();
+        public Material Material = new Material(Color.Red, Color.Red, Color.Red, 0.1f);
+        public ShadingOption shading = ShadingOption.None;
 
         private float3 Rads => Trialagles[0].a.Rads;
 
@@ -24,12 +51,12 @@ namespace gk4.Shapes
         }
 
         // rysuje figure
-        public void drawMe(ref Bitmap Whitheboard)
+        public void drawMe(ref Bitmap Whitheboard, List<Light> lights)
         {
 
             foreach (var t in Trialagles)
             {
-                t.drawMe(LineColor, ref Whitheboard);
+                t.drawMe(LineColor, ref Whitheboard, Material, shading, lights);
             }
         }
 

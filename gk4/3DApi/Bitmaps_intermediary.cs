@@ -1,7 +1,8 @@
 ﻿using g4;
 using gk4._3DApi.Components;
+using gk4._3DApi.Components.Objects;
+using gk4._3DApi.Components.Objects.Components;
 using gk4.Matrix;
-using gk4.Shapes;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,6 +10,11 @@ using System.Windows.Forms;
 namespace gk4
 {
     
+    public enum objectType
+    {
+        Figure,
+        Lighte
+    }
 
     // Pośrednik między bitmapą a programistą
     public class Bitmaps_intermediary
@@ -29,8 +35,15 @@ namespace gk4
 
         // zbiór figur, każda figura zawiera sie w zbiorze krawędzi
         List<Figure> Figures = new List<Figure>();
+        public int FiguresNumber => Figures.Count;
 
-        public int FiguresNumber => Figures.Count; 
+        List<Light> Lights = new List<Light>();
+        public int LightsNumber => Lights.Count;
+
+        public int ObjectID => objectType == objectType.Figure ? FiguresNumber -1 : LightsNumber -1;
+
+        private objectType objectType = objectType.Figure;
+
 
         public Bitmaps_intermediary(Bitmap w, PictureBox pb)
         {
@@ -101,7 +114,7 @@ namespace gk4
         // rysuje wybraną figure
         private void drawFigure(int i)
         {
-            Figures[i].drawMe(ref Whitheboard);
+            Figures[i].drawMe(ref Whitheboard, Lights);
         }
 
 
@@ -109,8 +122,15 @@ namespace gk4
         public void drawAll()
         {
             Whitheboard = new Bitmap(Whitheboard.Width, Whitheboard.Height);
-            for (int i = 0; i < Figures.Count; i++)
-                drawFigure(i);
+            // segreguje obiekty ze względu na odległość od kamery 
+            List<(int i, float z)> cos = new List<(int i, float z)>();
+            for (int i = 0; i < FiguresNumber; i++)
+                cos.Add((i, Figures[i].FigureCenter.z));
+
+            cos.Sort((a, b) => a.z < b.z ? 1 : -1);
+
+            for (int i = 0; i < FiguresNumber; i++)
+                drawFigure(cos[i].i);
             WhitheboardBox.Image = Whitheboard;
         }
 
@@ -126,7 +146,13 @@ namespace gk4
         // dodaje krawędź do figury jak i do zbioru krawędzi
         public void Add(Trialagle trialagle)
         {
-            this[Figures.Count - 1].Add(trialagle);
+            if (objectType == objectType.Figure)
+                this[Figures.Count - 1].Add(trialagle);
+            else if (objectType == objectType.Lighte)
+            {
+                GetLighte(LightsNumber - 1).Add(trialagle);
+                Figures[FiguresNumber - 1] = GetLighte(LightsNumber - 1);
+            }
         }
 
         // konczy dodawanie do fugury i pozwala dodawać do nowej figury
@@ -134,6 +160,15 @@ namespace gk4
         {
             Figures.Add(new Figure());
             Figures[FiguresNumber - 1].LineColor = DefaultLineColor;
+            objectType = objectType.Figure;
+        }
+
+        // konczy dodawanie do fugury i pozwala dodawać do nowej figury
+        public void Create_New_Lighte()
+        {
+            Create_New_Figure();
+            Lights.Add(new Light());
+            objectType = objectType.Lighte;
         }
 
         public Camera Create_Camera(float position_x, float position_y, float position_z,
@@ -149,14 +184,17 @@ namespace gk4
             get { return Figures[i]; }
         }
 
+        public Light GetLighte(int i) => Lights[i];
+        
+
         /// <summary>
         /// Roracje 
         /// </summary>
         /// <param name="rad"></param>
         /// <param name="id"></param>
         /// 
-                // poniższe funkcje obracają wybrane figury względem danej osi
-                public void rotate_x(float rad, int id)
+        // poniższe funkcje obracają wybrane figury względem danej osi
+        public void rotate_x(float rad, int id)
                 {
                         Figures[id].rotate_x(rad);
                 }

@@ -1,4 +1,5 @@
 ﻿using gk4._3DApi.Components.Objects.Components;
+using gk4._3DApi.Drarwing;
 using gk4.Matrix;
 using System;
 using System.Collections.Generic;
@@ -48,14 +49,11 @@ namespace gk4._3DApi.Components.Objects
         }
 
         // rysuje figure
-        public void drawMe(ref Bitmap Whitheboard, List<Light> lights)
+        public void drawMe(ref Bitmap Whitheboard, List<Light> lights, FillLine fillLine)
         {
-            foreach(Light light in lights)
-                light.Shading = ShadingOption.None;
-
             foreach (var t in Trialagles)
             {
-                t.drawMe(LineColor, ref Whitheboard, Material, Shading, lights);
+                t.drawMe(LineColor, ref Whitheboard, Material, Shading, lights, fillLine);
             }
         }
 

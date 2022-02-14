@@ -10,19 +10,16 @@ namespace gk4._3DApi.Components.Objects.Components
     {
         public Point3 a,b,c;
         int x1, y1, x2, y2, x3, y3; // pozycja odpowiednich punktów na bitmapie
-        public FillLine FillLine;
         public float3 TrialagleCenter => (a.visableCoordinates + b.visableCoordinates + c.visableCoordinates) / 3;
 
-        public Trialagle(Point3 a, Point3 b, Point3 c, FillLine fillLine)
+        public Trialagle(Point3 a, Point3 b, Point3 c)
         { 
             this.a = a;
             this.b = b;
             this.c = c;
-            this.FillLine = fillLine;
-
         }
 
-        public Trialagle(Point3 a, Point3 b, Point3 c, FillLine fillLine, float3 normalvector): this(a, b,c, fillLine)
+        public Trialagle(Point3 a, Point3 b, Point3 c, float3 normalvector): this(a, b,c)
         {
 
             a.NormalVector = normalvector;
@@ -57,7 +54,7 @@ namespace gk4._3DApi.Components.Objects.Components
         
 
 
-        private void fill_me(ref Bitmap Whitheboard, Color c, Material material, ShadingOption shading, List<Light> lights)
+        private void fill_me(ref Bitmap Whitheboard, Color c, Material material, ShadingOption shading, List<Light> lights, FillLine fillLine)
         {
             (int x, int y) theHighest = (x1, y1);
             (int x, int y) theLowest = (x2, y2);
@@ -74,14 +71,14 @@ namespace gk4._3DApi.Components.Objects.Components
             double theLowestTheHighestSkalar = ((double)theHighest.x - (double)theLowest.x) / (double)TheLowestTheHighests_Highte;
             double MediumTheHighestsSkalar = ((double)theHighest.x - (double)medium.x) / (double)MediumTheHighests_Highte;
 
-            FillLine.shading = shading;
-            FillLine.trialagleToFill = this;
+            fillLine.shading = shading;
+            fillLine.trialagleToFill = this;
 
             if (TheLowestTheHighests_Highte != 0 && theLowestMedium_Highte != 0)
             {
                 for (int i = 0; i <= theLowestMedium_Highte; i++)
                 {
-                    FillLine.fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
+                    fillLine.fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
                                 (int)(theLowest.x + theLowestMediumSkalar * i),
                                 i + theLowest.y,
                                 ref Whitheboard, c);
@@ -92,7 +89,7 @@ namespace gk4._3DApi.Components.Objects.Components
             {
                 for (int i = theLowestMedium_Highte; i <= TheLowestTheHighests_Highte; i++)
                 {
-                    FillLine.fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
+                    fillLine.fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
                                 (int)(medium.x + MediumTheHighestsSkalar * (i - theLowestMedium_Highte)),
                                 i + theLowest.y,
                                 ref Whitheboard, c);
@@ -113,12 +110,12 @@ namespace gk4._3DApi.Components.Objects.Components
                 c.visableCoordinates - a.visableCoordinates
                 );
 
-        public void drawMe(Color LineColor, ref Bitmap Whitheboard, Material material, ShadingOption shading, List<Light> lights)
+        public void drawMe(Color LineColor, ref Bitmap Whitheboard, Material material, ShadingOption shading, List<Light> lights, FillLine fillLine)
         {
             countPosition();
             if (normalVector.z > 0)
             {
-                fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B), material, shading, lights);
+                fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B), material, shading, lights, fillLine);
                 drawing_lines.drawe(x1, y1, x2, y2, LineColor, ref Whitheboard);
                 drawing_lines.drawe(x2, y2, x3, y3, LineColor, ref Whitheboard);
                 drawing_lines.drawe(x3, y3, x1, y1, LineColor, ref Whitheboard);

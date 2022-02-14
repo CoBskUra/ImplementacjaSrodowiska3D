@@ -107,15 +107,15 @@ namespace gk4._3DApi
         public void Add_Trialagle(Point3 a, Point3 b, Point3 c, float3? normalvector = null)
         {
             if (normalvector == null)
-                Add(new Trialagle(a, b, c, FillLine));
+                Add(new Trialagle(a, b, c));
             else
-                Add(new Trialagle(a, b, c, FillLine, (float3)normalvector));
+                Add(new Trialagle(a, b, c, (float3)normalvector));
         }
 
         // rysuje wybraną figure
         private void drawFigure(int i)
         {
-            Figures[i].drawMe(ref Whitheboard, Lights);
+            Figures[i].drawMe(ref Whitheboard, Lights, FillLine);
         }
 
 
@@ -123,15 +123,18 @@ namespace gk4._3DApi
         public void drawAll()
         {
             Whitheboard = new Bitmap(Whitheboard.Width, Whitheboard.Height);
+
             // segreguje obiekty ze względu na odległość od kamery 
-            List<(int i, float z)> cos = new List<(int i, float z)>();
+            List<(int i, float z)> sortedFigures = new List<(int i, float z)>();
             for (int i = 0; i < FiguresNumber; i++)
-                cos.Add((i, Figures[i].FigureCenter.z));
+                sortedFigures.Add((i, Figures[i].FigureCenter.z));
+            sortedFigures.Sort((a, b) => a.z < b.z ? 1 : -1);
 
-            cos.Sort((a, b) => a.z < b.z ? 1 : -1);
+            foreach (var l in Lights)
+                l.Shading = ShadingOption.None;
 
             for (int i = 0; i < FiguresNumber; i++)
-                drawFigure(cos[i].i);
+                drawFigure(sortedFigures[i].i);
             WhitheboardBox.Image = Whitheboard;
         }
 

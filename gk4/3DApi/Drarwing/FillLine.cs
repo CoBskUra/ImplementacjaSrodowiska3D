@@ -10,6 +10,7 @@ namespace gk4._3DApi.Drarwing
         public ShadingOption shading = ShadingOption.None;
         public Trialagle trialagleToFill;
         public List<Light> lights;
+        public Material Material;
 
         public void fillLine(int x1, int x2, int y, ref Bitmap whitheBoard, Color c)
         {
@@ -27,6 +28,7 @@ namespace gk4._3DApi.Drarwing
         {
             if (y < 0 || y >= whitheBoard.Height)
                 return;
+
             if (x1 > x2)
             {
                 var tmp = x1;

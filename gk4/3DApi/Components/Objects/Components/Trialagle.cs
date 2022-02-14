@@ -54,7 +54,7 @@ namespace gk4._3DApi.Components.Objects.Components
         
 
 
-        private void fill_me(ref Bitmap Whitheboard, Color c, Material material, ShadingOption shading, List<Light> lights, FillLine fillLine)
+        private void fill_me(ref Bitmap Whitheboard, Color c, FillLine fillLine)
         {
             (int x, int y) theHighest = (x1, y1);
             (int x, int y) theLowest = (x2, y2);
@@ -71,8 +71,8 @@ namespace gk4._3DApi.Components.Objects.Components
             double theLowestTheHighestSkalar = ((double)theHighest.x - (double)theLowest.x) / (double)TheLowestTheHighests_Highte;
             double MediumTheHighestsSkalar = ((double)theHighest.x - (double)medium.x) / (double)MediumTheHighests_Highte;
 
-            fillLine.shading = shading;
-            fillLine.trialagleToFill = this;
+            
+
 
             if (TheLowestTheHighests_Highte != 0 && theLowestMedium_Highte != 0)
             {
@@ -110,12 +110,12 @@ namespace gk4._3DApi.Components.Objects.Components
                 c.visableCoordinates - a.visableCoordinates
                 );
 
-        public void drawMe(Color LineColor, ref Bitmap Whitheboard, Material material, ShadingOption shading, List<Light> lights, FillLine fillLine)
+        public void drawMe(Color LineColor, ref Bitmap Whitheboard, FillLine fillLine)
         {
             countPosition();
             if (normalVector.z > 0)
             {
-                fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B), material, shading, lights, fillLine);
+                fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B), fillLine);
                 drawing_lines.drawe(x1, y1, x2, y2, LineColor, ref Whitheboard);
                 drawing_lines.drawe(x2, y2, x3, y3, LineColor, ref Whitheboard);
                 drawing_lines.drawe(x3, y3, x1, y1, LineColor, ref Whitheboard);

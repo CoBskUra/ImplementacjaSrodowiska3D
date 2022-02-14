@@ -49,11 +49,14 @@ namespace gk4._3DApi.Components.Objects
         }
 
         // rysuje figure
-        public void drawMe(ref Bitmap Whitheboard, List<Light> lights, FillLine fillLine)
+        public void drawMe(ref Bitmap Whitheboard, FillLine fillLine)
         {
+            fillLine.shading = Shading;
+            fillLine.Material = Material;
             foreach (var t in Trialagles)
             {
-                t.drawMe(LineColor, ref Whitheboard, Material, Shading, lights, fillLine);
+                fillLine.trialagleToFill = t;
+                t.drawMe(LineColor, ref Whitheboard, fillLine);
             }
         }
 

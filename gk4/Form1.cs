@@ -71,7 +71,7 @@ namespace gk4
             {
                 Api3D.Transform(0, 0, 0);
                 int i = Api3D.Sphere(0.5f, 4,4);
-                Api3D.GetLighte(i).SetVarbles(1, 0.09f, 0.032f, Color.Yellow, Color.Ivory, Color.Red);
+                Api3D.GetLighte(i).SetVarbles(1, 0.09f, 0.032f, (1f, 0.5f, 0.2f, 1f), (1f, 0.5f, 0.2f, 1f), (1f, 0.6f, 0.6f, 1f));
                 Api3D.GetLighte(i).LineColor = Color.Red;
             }
 

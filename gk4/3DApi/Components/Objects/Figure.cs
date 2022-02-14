@@ -10,12 +10,12 @@ namespace gk4._3DApi.Components.Objects
 {
     public class Material
     {
-        public Color specular;
-        public Color diffuse;
-        public Color ambient;
+        public float4 specular;
+        public float4 diffuse;
+        public float4 ambient;
         public float shininess;
 
-        public Material(Color specular, Color diffuse, Color ambient, float shininess)
+        public Material(float4 specular, float4 diffuse, float4 ambient, float shininess)
         {
             this.specular = specular;  
             this.diffuse = diffuse; 
@@ -37,7 +37,7 @@ namespace gk4._3DApi.Components.Objects
 
         public Color LineColor;
         public List<Trialagle> Trialagles = new List<Trialagle>();
-        public Material Material = new Material(Color.Red, Color.Red, Color.Red, 0.1f);
+        public Material Material = new Material((1f,0.1f,0f,1f), (1f, 0.1f, 0f, 1f), (1f, 0.5f, 0f, 1f), 0.1f);
         public ShadingOption Shading = ShadingOption.None;
 
         private float3 Rads => Trialagles[0].a.Rads;

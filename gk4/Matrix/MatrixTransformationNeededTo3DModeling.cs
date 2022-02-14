@@ -4,7 +4,7 @@ namespace gk4.Matrix
 {
     public static class MatrixTransformationNeededTo3DModeling
     {
-        public static matrix<float> cross_product(matrix<float> a, matrix<float> b)
+        public static Matrix<float> cross_product(Matrix<float> a, Matrix<float> b)
         {
             if (a.GetLength(1) != 1 || a.GetLength(0) != 3 || b.GetLength(1) != 1 || b.GetLength(0) != 3)
                 throw new Exception("macierz nie jest 3x1");
@@ -12,7 +12,7 @@ namespace gk4.Matrix
             {
                 a.Normalization_3x1();
                 b.Normalization_3x1();
-                matrix<float> result = new matrix<float>(3, 1);
+                Matrix<float> result = new Matrix<float>(3, 1);
                 result[0, 0] = a[1, 0] * b[2, 0] - a[2, 0] * b[1, 0];
                 result[1, 0] = a[2, 0] * b[0, 0] - a[0, 0] * b[2, 0];
                 result[2, 0] = a[0, 0] * b[1, 0] - a[1, 0] * b[0, 0];
@@ -21,7 +21,7 @@ namespace gk4.Matrix
             }
         }
 
-        public static void Normalization_3x1(this matrix<float> m)
+        public static void Normalization_3x1(this Matrix<float> m)
         {
             if (m.GetLength(1) != 1 || m.GetLength(0) != 3)
                 throw new Exception("macierz nie jest 3x1");
@@ -40,13 +40,13 @@ namespace gk4.Matrix
 
 
         // obracają macierz wzglądem danej osi
-        public static void rotate_x(this matrix<float> M, float rad)
+        public static void rotate_x(this Matrix<float> M, float rad)
         {
             if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
                 throw new Exception("macierz nie jest 4x4");
             else
             {
-                matrix<float> rotete = new matrix<float>(4, 4);
+                Matrix<float> rotete = new Matrix<float>(4, 4);
                 rotete[0, 0] = 1;
 
                 rotete[1, 1] = MathF.Cos(rad);
@@ -57,18 +57,18 @@ namespace gk4.Matrix
 
                 rotete[3, 3] = 1;
 
-                matrix<float> r = (dynamic)(M * rotete);
+                Matrix<float> r = (dynamic)(M * rotete);
                 M.m = r.m;
             }
         }
 
-        public static void rotate_z(this matrix<float> M, float rad)
+        public static void rotate_z(this Matrix<float> M, float rad)
         {
             if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
                 throw new Exception("macierz nie jest 4x4");
             else
             {
-                matrix<float> rotete = new matrix<float>(4, 4);
+                Matrix<float> rotete = new Matrix<float>(4, 4);
                 rotete[0, 0] = MathF.Cos(rad);
                 rotete[0, 1] = -MathF.Sin(rad);
 
@@ -80,20 +80,20 @@ namespace gk4.Matrix
 
                 rotete[3, 3] = 1;
 
-                matrix<float> r = (dynamic)(M * rotete);
+                Matrix<float> r = (dynamic)(M * rotete);
                 M.m = r.m;
             }
         }
 
 
 
-        public static void rotate_y(this matrix<float> M, float rad)
+        public static void rotate_y(this Matrix<float> M, float rad)
         {
             if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
                 throw new Exception("macierz nie jest 4x4");
             else
             {
-                matrix<float> rotete = new matrix<float>(4, 4);
+                Matrix<float> rotete = new Matrix<float>(4, 4);
                 rotete[0, 0] = MathF.Cos(rad);
                 rotete[0, 2] = -MathF.Sin(rad);
 
@@ -104,12 +104,12 @@ namespace gk4.Matrix
 
                 rotete[3, 3] = 1;
 
-                matrix<float> r = (M * rotete);
+                Matrix<float> r = (M * rotete);
                 M.m = r.m;
             }
         }
 
-        public static void rotate(this matrix<float> M, float rad)
+        public static void rotate(this Matrix<float> M, float rad)
         {
             M.rotate_x(rad);
             M.rotate_y(rad);
@@ -118,13 +118,13 @@ namespace gk4.Matrix
 
 
         // obracają macierz wzglądem danej osi
-        public static void reverse_rotate_x(this matrix<float> M, float rad)
+        public static void reverse_rotate_x(this Matrix<float> M, float rad)
         {
             if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
                 throw new Exception("macierz nie jest 4x4");
             else
             {
-                matrix<float> rotete = new matrix<float>(4, 4);
+                Matrix<float> rotete = new Matrix<float>(4, 4);
                 rotete[0, 0] = 1;
 
                 rotete[1, 1] = MathF.Cos(rad);
@@ -135,18 +135,18 @@ namespace gk4.Matrix
 
                 rotete[3, 3] = 1;
 
-                matrix<float> r = (dynamic)(M * rotete);
+                Matrix<float> r = (dynamic)(M * rotete);
                 M.m = r.m;
             }
         }
 
-        public static void reverse_rotate_z(this matrix<float> M, float rad)
+        public static void reverse_rotate_z(this Matrix<float> M, float rad)
         {
             if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
                 throw new Exception("macierz nie jest 4x4");
             else
             {
-                matrix<float> rotete = new matrix<float>(4, 4);
+                Matrix<float> rotete = new Matrix<float>(4, 4);
                 rotete[0, 0] = MathF.Cos(rad);
                 rotete[0, 1] = MathF.Sin(rad);
 
@@ -158,20 +158,20 @@ namespace gk4.Matrix
 
                 rotete[3, 3] = 1;
 
-                matrix<float> r = (dynamic)(M * rotete);
+                Matrix<float> r = (dynamic)(M * rotete);
                 M.m = r.m;
             }
         }
 
 
 
-        public static void reverse_rotate_y(this matrix<float> M, float rad)
+        public static void reverse_rotate_y(this Matrix<float> M, float rad)
         {
             if (M.GetLength(0) != 4 || M.GetLength(1) > 4)
                 throw new Exception("macierz nie jest 4x4");
             else
             {
-                matrix<float> rotete = new matrix<float>(4, 4);
+                Matrix<float> rotete = new Matrix<float>(4, 4);
                 rotete[0, 0] = MathF.Cos(rad);
                 rotete[0, 2] = MathF.Sin(rad);
 
@@ -182,7 +182,7 @@ namespace gk4.Matrix
 
                 rotete[3, 3] = 1;
 
-                matrix<float> r = (M * rotete);
+                Matrix<float> r = (M * rotete);
                 M.m = r.m;
             }
         }

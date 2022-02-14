@@ -5,8 +5,8 @@ namespace gk4._3DApi.Components
 {
     public class Camera
     {
-        private matrix<float> VIEW = new matrix<float>(4, 4);
-        private matrix<float> PROJ = new matrix<float>(4, 4);
+        private Matrix<float> VIEW = new Matrix<float>(4, 4);
+        private Matrix<float> PROJ = new Matrix<float>(4, 4);
         private float aspect;
         private float FOV;
         private float N, F;
@@ -56,7 +56,7 @@ namespace gk4._3DApi.Components
             }
         }
 
-        public matrix<float> View
+        public Matrix<float> View
         {
             get
             {
@@ -64,7 +64,7 @@ namespace gk4._3DApi.Components
             }
         }
 
-        public matrix<float> Proj
+        public Matrix<float> Proj
         {
             get
             {
@@ -127,17 +127,17 @@ namespace gk4._3DApi.Components
 
         public void refreshViever()
         {
-            matrix<float> Uworld = new matrix<float>(3, 1);
+            Matrix<float> Uworld = new Matrix<float>(3, 1);
             Uworld[0, 0] = 0; Uworld[1, 0] = 1; Uworld[2, 0] = 0;
 
-            matrix<float> D = new matrix<float>(3, 1);
+            Matrix<float> D = new Matrix<float>(3, 1);
             D[0, 0] = POSITION.x - LOOK_AT.x; D[1, 0] = POSITION.y - LOOK_AT.y; D[2, 0] = POSITION.z - LOOK_AT.z;
 
-            matrix<float> R = MatrixTransformationNeededTo3DModeling.cross_product(Uworld, D);
+            Matrix<float> R = MatrixTransformationNeededTo3DModeling.cross_product(Uworld, D);
 
-            matrix<float> U = MatrixTransformationNeededTo3DModeling.cross_product(D, R);
+            Matrix<float> U = MatrixTransformationNeededTo3DModeling.cross_product(D, R);
 
-            VIEW = new matrix<float>(4,4);
+            VIEW = new Matrix<float>(4,4);
 
             VIEW[0, 0] = R[0, 0];
             VIEW[0, 1] = R[1, 0];
@@ -153,7 +153,7 @@ namespace gk4._3DApi.Components
 
             VIEW[3, 3] = 1;
 
-            matrix<float> P = new matrix<float>(4, 4);
+            Matrix<float> P = new Matrix<float>(4, 4);
 
             P.ReduceToDiagonal();
 

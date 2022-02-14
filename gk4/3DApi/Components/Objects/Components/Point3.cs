@@ -100,7 +100,7 @@ namespace gk4._3DApi.Components.Objects.Components
         }
 
         
-        private matrix<float> CoordinateMulipleByProjViewModel()
+        private Matrix<float> CoordinateMulipleByProjViewModel()
         {
             var vector = this.RotatedCordinates;
 
@@ -119,7 +119,7 @@ namespace gk4._3DApi.Components.Objects.Components
         {
             get
             {
-                matrix<float> tmp = new matrix<float>(4, 1);
+                Matrix<float> tmp = new Matrix<float>(4, 1);
 
                 tmp.m[0, 0] = normal_vector.x + RotationCenter.x;
                 tmp.m[1, 0] = normal_vector.y + RotationCenter.y;
@@ -214,11 +214,11 @@ namespace gk4._3DApi.Components.Objects.Components
         }
 
 
-        private matrix<float> RotatedCordinates 
+        private Matrix<float> RotatedCordinates 
         {
             get
             {
-                matrix<float> tmp = new matrix<float>(4, 1);
+                Matrix<float> tmp = new Matrix<float>(4, 1);
 
                 tmp.m[0, 0] = coordinates.x + RotationCenter.x;
                 tmp.m[1, 0] = coordinates.y + RotationCenter.y;
@@ -243,14 +243,14 @@ namespace gk4._3DApi.Components.Objects.Components
 
 
 
-        public matrix<float> RotationMatrix()
+        public Matrix<float> RotationMatrix()
         {
-            matrix<float> P = new matrix<float>(4, 4);
+            Matrix<float> P = new Matrix<float>(4, 4);
             P[0, 0] = 1;
             P[1, 1] = 1;
             P[2, 2] = 1;
             P[3, 3] = 1;
-            matrix<float> T = new matrix<float>(4, 4);
+            Matrix<float> T = new Matrix<float>(4, 4);
             T[0, 0] = 1;
             T[1, 1] = 1;
             T[2, 2] = 1;
@@ -258,7 +258,7 @@ namespace gk4._3DApi.Components.Objects.Components
             T[0, 3] = 1;
             T[1, 3] = 1;
             T[2, 3] = 1;
-            matrix<float> M = P * T;
+            Matrix<float> M = P * T;
             M.rotate_x(Rads.x);
             M.rotate_y(Rads.y);
             M.rotate_z(Rads.z);
@@ -266,19 +266,19 @@ namespace gk4._3DApi.Components.Objects.Components
 
         }
 
-        public matrix<float> reverseMatrixRotation()
+        public Matrix<float> reverseMatrixRotation()
         {
-            matrix<float> M = new matrix<float> (4, 4);
+            Matrix<float> M = new Matrix<float> (4, 4);
             M.ReduceToDiagonal();
             M.reverse_rotate_z(Rads.x);
             M.reverse_rotate_y(Rads.y);
             M.reverse_rotate_x(Rads.z);
-            matrix<float> P = new matrix<float>(4, 4);
+            Matrix<float> P = new Matrix<float>(4, 4);
             P[0, 0] = 1;
             P[1, 1] = 1;
             P[2, 2] = 1;
             P[3, 3] = 1;
-            matrix<float> T = new matrix<float>(4, 4);
+            Matrix<float> T = new Matrix<float>(4, 4);
             T[0, 0] = 1;
             T[1, 1] = 1;
             T[2, 2] = 1;

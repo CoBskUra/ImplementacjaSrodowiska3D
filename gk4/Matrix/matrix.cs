@@ -4,11 +4,11 @@ using System.Text;
 namespace gk4.Matrix
 {
 
-    public class matrix<T> where T : IComparable
+    public class Matrix<T> where T : IComparable
     {
         public T[,] m;
 
-        public matrix(int height, int widght)
+        public Matrix(int height, int widght)
         {
             m = new T[height, widght];
         }
@@ -45,13 +45,13 @@ namespace gk4.Matrix
         }
 
         // dodawanie macierzy
-        public static matrix<T> operator +(matrix<T> m1, matrix<T> m2)
+        public static Matrix<T> operator +(Matrix<T> m1, Matrix<T> m2)
         {
             if (m1.GetLength(0) != m2.GetLength(0) || m1.GetLength(1) != m2.GetLength(1))
                 return null;
             else
             {
-                matrix<T> result = new matrix<T>(m1.GetLength(0), m2.GetLength(1));
+                Matrix<T> result = new Matrix<T>(m1.GetLength(0), m2.GetLength(1));
                 for (int i = 0; i < m1.GetLength(0); i++)
                 {
                     for (int j = 0; j < m1.GetLength(1); j++)
@@ -64,13 +64,13 @@ namespace gk4.Matrix
         }
 
         // mnożenie macierzy
-        public static matrix<T> operator *(matrix<T> m1, matrix<T> m2)
+        public static Matrix<T> operator *(Matrix<T> m1, Matrix<T> m2)
         {
             if (m1.GetLength(1) != m2.GetLength(0))
                 return null;
             else
             {
-                matrix<T> result = new matrix<T>(m1.GetLength(0), m2.GetLength(1));
+                Matrix<T> result = new Matrix<T>(m1.GetLength(0), m2.GetLength(1));
                 for(int i = 0; i<result.GetLength(0); i++)
                 {
                     for(int j = 0; j<result.GetLength(1); j++)
@@ -86,9 +86,9 @@ namespace gk4.Matrix
             }
         }
 
-        public static matrix<double> operator /(matrix<T> m1, double c)
+        public static Matrix<double> operator /(Matrix<T> m1, double c)
         {
-            matrix<double> result = new matrix<double> (m1.GetLength(0), m1.GetLength(1));
+            Matrix<double> result = new Matrix<double> (m1.GetLength(0), m1.GetLength(1));
             for (int i = 0; i < m1.GetLength(0); i++)
             {
                 for (int j = 0; j < m1.GetLength(1); j++)
@@ -114,9 +114,9 @@ namespace gk4.Matrix
         }
 
         // poniższe funkcje rzutują (wiem że brzydkie ale nie wiedziałem jak inaczej)
-        public static implicit operator matrix<float>(matrix<T> m1)
+        public static implicit operator Matrix<float>(Matrix<T> m1)
         {
-            matrix<float> result = new matrix<float>(m1.GetLength(0), m1.GetLength(1));
+            Matrix<float> result = new Matrix<float>(m1.GetLength(0), m1.GetLength(1));
             for (int i = 0; i < m1.GetLength(0); i++)
             {
                 for (int j = 0; j < m1.GetLength(1); j++)
@@ -127,9 +127,9 @@ namespace gk4.Matrix
             return result;
         }
 
-        public static implicit operator matrix<int>(matrix<T> m1)
+        public static implicit operator Matrix<int>(Matrix<T> m1)
         {
-            matrix<int> result = new matrix<int>(m1.GetLength(0), m1.GetLength(1));
+            Matrix<int> result = new Matrix<int>(m1.GetLength(0), m1.GetLength(1));
             for (int i = 0; i < m1.GetLength(0); i++)
             {
                 for (int j = 0; j < m1.GetLength(1); j++)
@@ -140,9 +140,9 @@ namespace gk4.Matrix
             return result;
         }
 
-        public static implicit operator matrix<double>(matrix<T> m1)
+        public static implicit operator Matrix<double>(Matrix<T> m1)
         {
-            matrix<double> result = new matrix<double>(m1.GetLength(0), m1.GetLength(1));
+            Matrix<double> result = new Matrix<double>(m1.GetLength(0), m1.GetLength(1));
             for (int i = 0; i < m1.GetLength(0); i++)
             {
                 for (int j = 0; j < m1.GetLength(1); j++)

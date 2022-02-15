@@ -103,6 +103,10 @@ namespace gk4._3DApi.Components
 
                 refreshViever();
             }
+            get
+            {
+                return LOOK_AT;
+            }
         }
 
 

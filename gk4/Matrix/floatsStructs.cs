@@ -46,10 +46,19 @@ namespace gk4.Matrix
             return new float3(a.x / b, a.y / b, a.z / b);
         }
 
+        
+
         public static float3 operator *(float3 a, float b)
         {
             return new float3(a.x * b, a.y * b, a.z * b);
         }
+
+
+        public static float3 operator *(float3 a, float3 b)
+        {
+            return new float3(a.x * b.x, a.y * b.y, a.z * b.z);
+        }
+
 
         public static implicit operator (float a, float b, float c)(float3 f3)
         {
@@ -152,9 +161,9 @@ namespace gk4.Matrix
     
     public static class floats
     {
-        public static float Cos(float4 a, float4 b)
+        public static float Cos(float3 a, float3 b)
         {
-            return a.x * b.x + a.y * b.y + a.z * b.z + a.g * b.g;
+            return a.x * b.x + a.y * b.y + a.z * b.z;
         }
     }
 

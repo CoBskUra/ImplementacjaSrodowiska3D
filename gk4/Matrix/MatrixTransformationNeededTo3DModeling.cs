@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Drawing;
 
 namespace gk4.Matrix
 {
     public static class MatrixTransformationNeededTo3DModeling
     {
+        public static Color negation(this Color c) => Color.FromArgb(255 - c.R, 255 - c.G, 255 - c.B);
+
+        public static float3 ConvertTofloat3(this Color c) => new float3((float)c.R/255, (float)c.G/255, (float)c.B/255);
+
         public static Matrix<float> cross_product(Matrix<float> a, Matrix<float> b)
         {
             if (a.GetLength(1) != 1 || a.GetLength(0) != 3 || b.GetLength(1) != 1 || b.GetLength(0) != 3)

@@ -48,7 +48,7 @@ namespace gk4._3DApi.Components.Objects.Components
         public float3 Rads;
 
         // defaultowy środek figury 
-        private float3 FigureCenter;
+        public float3 FigureCenter;
 
         // obecny środek
         public float3 CurenntFigureCenter;
@@ -154,12 +154,15 @@ namespace gk4._3DApi.Components.Objects.Components
         {
             private set
             {
+                
+                FigureCenter.x -= value.x - this.coordinates.x;
+                FigureCenter.y -= value.y - this.coordinates.y;
+                FigureCenter.z -= value.z - this.coordinates.z;
                 this.coordinates.x = value.x;
                 this.coordinates.y = value.y;
                 this.coordinates.z = value.z;
-                FigureCenter.x += value.x - this.coordinates.x;
-                FigureCenter.y += value.y - this.coordinates.y;
-                FigureCenter.z += value.z - this.coordinates.z;
+                CurenntFigureCenter = FigureCenter;
+                RotationCenter = FigureCenter;
             }
             get
             {
@@ -171,9 +174,7 @@ namespace gk4._3DApi.Components.Objects.Components
         {
             set
             {
-                RotationCenter.x = value.x;
-                RotationCenter.y = value.y;
-                RotationCenter.z = value.z;
+                RotationCenter = value;
             }
             get
             {
@@ -241,6 +242,7 @@ namespace gk4._3DApi.Components.Objects.Components
                 CurenntFigureCenter.y = tmp[1, 0] + FigureCenter.y - coordinates.y;
                 CurenntFigureCenter.z = tmp[2, 0] + FigureCenter.z - coordinates.z;
 
+                //Debug.WriteLine(CurenntFigureCenter.ToString() + '\n' + FigureCenter + '\n');
 
                 return tmp;
             }

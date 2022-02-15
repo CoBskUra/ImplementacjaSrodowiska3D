@@ -179,5 +179,13 @@ namespace gk4._3DApi.Drarwing
                                             MathF.Sin(Psi) * MathF.Cos(Phi));
             return Bitmap_Api.create_point(location, MatrixTransformationNeededTo3DModeling.cross_product(tangentialVector, binormal), tangentialVector, binormal);
         }
+
+        public static int Person(this Bitmaps_intermediary Bitmap_API, float a, float b)
+        {
+            Bitmap_API.Squer(a);
+            Bitmap_API.AditionalTransform(0, a, 0);
+            Bitmap_API.Squer(b);
+            return Bitmap_API.ObjectID;
+        }
     }
 }

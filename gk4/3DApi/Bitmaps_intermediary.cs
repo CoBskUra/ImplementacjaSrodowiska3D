@@ -70,6 +70,7 @@ namespace gk4._3DApi
             Max_y = w.Height;
             FillLine.lights = Lights;
             FillLine.cameraPointer = CameraPointer;
+            FillLine.abient = (0.4f, 0.4f, 0.6f);
         }
 
         public void Transform(float x, float y, float z)
@@ -77,6 +78,13 @@ namespace gk4._3DApi
             Transformation.x = x;
             Transformation.y = y;
             Transformation.z = z;
+        }
+
+        public void AditionalTransform(float x, float y, float z)
+        {
+            Transformation.x += x;
+            Transformation.y += y;
+            Transformation.z += z;
         }
 
         public void setRotationCenter(int id, float x, float y, float z)
@@ -149,7 +157,7 @@ namespace gk4._3DApi
                 l.Shading = ShadingOption.None;
 
             for (int i = 0; i < FiguresNumber; i++)
-                drawFigure(sortedFigures[i].i);
+                drawFigure(i);
             WhitheboardBox.Image = Whitheboard;
         }
 

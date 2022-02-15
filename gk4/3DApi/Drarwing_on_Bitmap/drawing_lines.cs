@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace gk4._3DApi.Drarwing
@@ -49,7 +50,7 @@ namespace gk4._3DApi.Drarwing
         }
 
         public static void all_in(Point first, Point last, Bitmap whiteboard,
-                                    int d, int incr1, int incr2, int add_to_x1, int add_to_y1, int add_to_x2, int add_to_y2, Color c1, Color c2)
+                                    int d, int incr1, int incr2, int add_to_x1, int add_to_y1, int add_to_x2, int add_to_y2, Color c1, Color c2, List<Color> colors)
         {
             int x1 = first.X;
             int y1 = first.Y;
@@ -60,10 +61,15 @@ namespace gk4._3DApi.Drarwing
 
             int x = x1;
             int y = y1;
+            
             if (x > 0 && x < whiteboard.Width && y > 0 && y < whiteboard.Height)
+            {
                 whiteboard.SetPixel(x, y, c1);
+                colors.Add(c1);
+            }
             while (x < x2 || y != y2)
             {
+                int prevy = y;
                 if (d < 0) //choose S 
                 {
                     d += incr1;
@@ -80,9 +86,14 @@ namespace gk4._3DApi.Drarwing
                 {
                     double q = PitagorasEquation(new Point(x1, y1), new Point(x, y)) / lenght;
                     q = q > 1 ? 1 : q;
-                    whiteboard.SetPixel(x, y, ColorInterpolation(c1, c2, q));
+                    Color c = ColorInterpolation(c1, c2, q);
+                    if(y != prevy)
+                        colors.Add(c);
+                    whiteboard.SetPixel(x, y, c);
                 }
             }
+            if (y2 < y1)
+                colors.Reverse();
         }
 
         
@@ -102,7 +113,7 @@ namespace gk4._3DApi.Drarwing
             return (int)(a * (1 - q) + b * q);
         }
 
-        public static void drawe(int x1, int y1, int x2, int y2, ref Bitmap whiteboard, Color c1, Color? c2 = null)
+        public static void drawe(int x1, int y1, int x2, int y2, ref Bitmap whiteboard, Color c1, Color? c2 = null, List<Color> colors = null)
         {
 
 
@@ -180,7 +191,7 @@ namespace gk4._3DApi.Drarwing
                                     d, incr1, incr2, add_to_x1, add_to_y1, add_to_x2, add_to_y2, c1);
             else
                 all_in(new Point(x1, y1), new Point(x2, y2), whiteboard,
-                                    d, incr1, incr2, add_to_x1, add_to_y1, add_to_x2, add_to_y2, c1, (Color)c2);
+                                    d, incr1, incr2, add_to_x1, add_to_y1, add_to_x2, add_to_y2, c1, (Color)c2, colors);
 
 
 

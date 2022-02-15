@@ -38,10 +38,10 @@ namespace gk4
             this.CameraFolowingButton = new System.Windows.Forms.Button();
             this.Cameras = new System.Windows.Forms.GroupBox();
             this.ShadingOptionBox = new System.Windows.Forms.GroupBox();
+            this.PhongShadingButton = new System.Windows.Forms.Button();
             this.NoneShadingButton = new System.Windows.Forms.Button();
             this.ConstantShadingButton = new System.Windows.Forms.Button();
             this.GouraudShadingButton = new System.Windows.Forms.Button();
-            this.PhongShadingButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.whitheboardBox)).BeginInit();
             this.Cameras.SuspendLayout();
             this.ShadingOptionBox.SuspendLayout();
@@ -128,6 +128,16 @@ namespace gk4
             this.ShadingOptionBox.TabStop = false;
             this.ShadingOptionBox.Text = "Rodzaj oświetlania";
             // 
+            // PhongShadingButton
+            // 
+            this.PhongShadingButton.Location = new System.Drawing.Point(6, 141);
+            this.PhongShadingButton.Name = "PhongShadingButton";
+            this.PhongShadingButton.Size = new System.Drawing.Size(136, 29);
+            this.PhongShadingButton.TabIndex = 10;
+            this.PhongShadingButton.Text = "Phonga";
+            this.PhongShadingButton.UseVisualStyleBackColor = true;
+            this.PhongShadingButton.Click += new System.EventHandler(this.PhongShadingButton_Click);
+            // 
             // NoneShadingButton
             // 
             this.NoneShadingButton.Location = new System.Drawing.Point(6, 36);
@@ -157,16 +167,6 @@ namespace gk4
             this.GouraudShadingButton.Text = "Gourauda";
             this.GouraudShadingButton.UseVisualStyleBackColor = true;
             this.GouraudShadingButton.Click += new System.EventHandler(this.GouraudShadingButton_Click);
-            // 
-            // PhongShadingButton
-            // 
-            this.PhongShadingButton.Location = new System.Drawing.Point(6, 141);
-            this.PhongShadingButton.Name = "PhongShadingButton";
-            this.PhongShadingButton.Size = new System.Drawing.Size(136, 29);
-            this.PhongShadingButton.TabIndex = 10;
-            this.PhongShadingButton.Text = "Phonga";
-            this.PhongShadingButton.UseVisualStyleBackColor = true;
-            this.PhongShadingButton.Click += new System.EventHandler(this.PhongShadingButton_Click);
             // 
             // Form1
             // 

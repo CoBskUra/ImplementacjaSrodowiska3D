@@ -96,7 +96,7 @@ namespace gk4._3DApi.Components.Objects.Components
 
             get
             {
-                return a.CurenntFigureCenter;
+                return a.FigureCenter;
             }
         }
 

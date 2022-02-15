@@ -13,11 +13,11 @@ namespace gk4._3DApi.Components.Objects
         public float Ac;
         public float Al;
         public float Aq;
-        public float4 ambient;
-        public float4 diffuse;
-        public float4 specular;
+        public float3 ambient;
+        public float3 diffuse;
+        public float3 specular;
 
-        public void SetVarbles(float Ac, float Al, float Aq, float4 ambient, float4 diffuse, float4 specular)
+        public void SetVarbles(float Ac, float Al, float Aq, float3 ambient, float3 diffuse, float3 specular)
         {
             this.Ac = Ac;
             this.Al = Al;
@@ -25,6 +25,11 @@ namespace gk4._3DApi.Components.Objects
             this.ambient = ambient;
             this.diffuse = diffuse;
             this.specular = specular;
+        }
+
+        public virtual bool isEfectingPixel()
+        {
+            return true;
         }
 
     }

@@ -49,7 +49,7 @@ namespace gk4._3DApi.Components.Objects
         }
 
         // rysuje figure
-        public void drawMe(ref Bitmap Whitheboard, FillLine fillLine)
+        public void drawMe(ref Bitmap Whitheboard, FillTrialangle fillLine)
         {
             fillLine.shading = Shading;
             fillLine.Material = Material;

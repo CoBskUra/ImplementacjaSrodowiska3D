@@ -37,8 +37,14 @@ namespace gk4
             this.CameraStaringButton = new System.Windows.Forms.Button();
             this.CameraFolowingButton = new System.Windows.Forms.Button();
             this.Cameras = new System.Windows.Forms.GroupBox();
+            this.ShadingOptionBox = new System.Windows.Forms.GroupBox();
+            this.NoneShadingButton = new System.Windows.Forms.Button();
+            this.ConstantShadingButton = new System.Windows.Forms.Button();
+            this.GouraudShadingButton = new System.Windows.Forms.Button();
+            this.PhongShadingButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.whitheboardBox)).BeginInit();
             this.Cameras.SuspendLayout();
+            this.ShadingOptionBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // whitheboardBox
@@ -109,12 +115,66 @@ namespace gk4
             this.Cameras.TabStop = false;
             this.Cameras.Text = "Kamery";
             // 
+            // ShadingOptionBox
+            // 
+            this.ShadingOptionBox.Controls.Add(this.PhongShadingButton);
+            this.ShadingOptionBox.Controls.Add(this.NoneShadingButton);
+            this.ShadingOptionBox.Controls.Add(this.ConstantShadingButton);
+            this.ShadingOptionBox.Controls.Add(this.GouraudShadingButton);
+            this.ShadingOptionBox.Location = new System.Drawing.Point(12, 256);
+            this.ShadingOptionBox.Name = "ShadingOptionBox";
+            this.ShadingOptionBox.Size = new System.Drawing.Size(148, 186);
+            this.ShadingOptionBox.TabIndex = 6;
+            this.ShadingOptionBox.TabStop = false;
+            this.ShadingOptionBox.Text = "Rodzaj oświetlania";
+            // 
+            // NoneShadingButton
+            // 
+            this.NoneShadingButton.Location = new System.Drawing.Point(6, 36);
+            this.NoneShadingButton.Name = "NoneShadingButton";
+            this.NoneShadingButton.Size = new System.Drawing.Size(136, 29);
+            this.NoneShadingButton.TabIndex = 7;
+            this.NoneShadingButton.Text = "Brak";
+            this.NoneShadingButton.UseVisualStyleBackColor = true;
+            this.NoneShadingButton.Click += new System.EventHandler(this.NoneShadingButton_Click);
+            // 
+            // ConstantShadingButton
+            // 
+            this.ConstantShadingButton.Location = new System.Drawing.Point(6, 71);
+            this.ConstantShadingButton.Name = "ConstantShadingButton";
+            this.ConstantShadingButton.Size = new System.Drawing.Size(136, 29);
+            this.ConstantShadingButton.TabIndex = 8;
+            this.ConstantShadingButton.Text = "Stałe";
+            this.ConstantShadingButton.UseVisualStyleBackColor = true;
+            this.ConstantShadingButton.Click += new System.EventHandler(this.ConstantShadingButton_Click);
+            // 
+            // GouraudShadingButton
+            // 
+            this.GouraudShadingButton.Location = new System.Drawing.Point(6, 106);
+            this.GouraudShadingButton.Name = "GouraudShadingButton";
+            this.GouraudShadingButton.Size = new System.Drawing.Size(136, 29);
+            this.GouraudShadingButton.TabIndex = 9;
+            this.GouraudShadingButton.Text = "Gourauda";
+            this.GouraudShadingButton.UseVisualStyleBackColor = true;
+            this.GouraudShadingButton.Click += new System.EventHandler(this.GouraudShadingButton_Click);
+            // 
+            // PhongShadingButton
+            // 
+            this.PhongShadingButton.Location = new System.Drawing.Point(6, 141);
+            this.PhongShadingButton.Name = "PhongShadingButton";
+            this.PhongShadingButton.Size = new System.Drawing.Size(136, 29);
+            this.PhongShadingButton.TabIndex = 10;
+            this.PhongShadingButton.Text = "Phonga";
+            this.PhongShadingButton.UseVisualStyleBackColor = true;
+            this.PhongShadingButton.Click += new System.EventHandler(this.PhongShadingButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(951, 627);
+            this.Controls.Add(this.ShadingOptionBox);
             this.Controls.Add(this.Cameras);
             this.Controls.Add(this.StartStop_Button);
             this.Controls.Add(this.whitheboardBox);
@@ -123,6 +183,7 @@ namespace gk4
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.whitheboardBox)).EndInit();
             this.Cameras.ResumeLayout(false);
+            this.ShadingOptionBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -136,6 +197,11 @@ namespace gk4
         private System.Windows.Forms.Button CameraStaringButton;
         private System.Windows.Forms.Button CameraFolowingButton;
         private System.Windows.Forms.GroupBox Cameras;
+        private System.Windows.Forms.GroupBox ShadingOptionBox;
+        private System.Windows.Forms.Button PhongShadingButton;
+        private System.Windows.Forms.Button NoneShadingButton;
+        private System.Windows.Forms.Button ConstantShadingButton;
+        private System.Windows.Forms.Button GouraudShadingButton;
     }
 }
 

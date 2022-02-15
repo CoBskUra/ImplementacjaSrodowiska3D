@@ -46,6 +46,11 @@ namespace gk4.Matrix
             return new float3(a.x / b, a.y / b, a.z / b);
         }
 
+        public static float3 operator *(float3 a, float b)
+        {
+            return new float3(a.x * b, a.y * b, a.z * b);
+        }
+
         public static implicit operator (float a, float b, float c)(float3 f3)
         {
             return (f3.x, f3.y, f3.z);

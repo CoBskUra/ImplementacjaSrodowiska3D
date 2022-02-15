@@ -9,7 +9,7 @@ namespace gk4._3DApi.Components.Objects.Components
     public class Trialagle
     {
         public Point3 a,b,c;
-        int x1, y1, x2, y2, x3, y3; // pozycja odpowiednich punktów na bitmapie
+        public int x1, y1, x2, y2, x3, y3, z1, z2, z3; // pozycja odpowiednich punktów na bitmapie
         public float3 TrialagleCenter => (a.visableCoordinates + b.visableCoordinates + c.visableCoordinates) / 3;
         public float3 TrialagleCenterInWorld => (a.WorldCoordinates + b.WorldCoordinates + c.WorldCoordinates) / 3;
 
@@ -28,82 +28,16 @@ namespace gk4._3DApi.Components.Objects.Components
             c.NormalVector = normalvector;
 
         }
-
-
-        private void sort(ref (int x, int y) theHighest, ref (int x, int y) theLowest, ref (int x, int y) medium)
-        {
-            if (theHighest.y < theLowest.y)
-            {
-                var tmp = theHighest;
-                theHighest = theLowest;
-                theLowest = tmp;
-            }
-            if (medium.y < theLowest.y)
-            {
-                var tmp = medium;
-                medium = theLowest;
-                theLowest = tmp;
-            }
-            else if (medium.y > theHighest.y)
-            {
-                var tmp = medium;
-                medium = theHighest;
-                theHighest = tmp;
-            }
-        }
-
         
 
 
-        private void fill_me(ref Bitmap Whitheboard, Color c, FillLine fillLine)
-        {
-            (int x, int y) theHighest = (x1, y1);
-            (int x, int y) theLowest = (x2, y2);
-            (int x, int y) medium = (x3, y3);
-
-            sort(ref theHighest, ref theLowest, ref medium);
-
-            int TheLowestTheHighests_Highte = theHighest.y - theLowest.y;
-            int theLowestMedium_Highte = medium.y - theLowest.y;
-            int MediumTheHighests_Highte = theHighest.y - medium.y;
-
-
-            double theLowestMediumSkalar = ((double)medium.x - (double)theLowest.x) / (double)theLowestMedium_Highte;
-            double theLowestTheHighestSkalar = ((double)theHighest.x - (double)theLowest.x) / (double)TheLowestTheHighests_Highte;
-            double MediumTheHighestsSkalar = ((double)theHighest.x - (double)medium.x) / (double)MediumTheHighests_Highte;
-
-            
-
-
-            if (TheLowestTheHighests_Highte != 0 && theLowestMedium_Highte != 0)
-            {
-                for (int i = 0; i <= theLowestMedium_Highte; i++)
-                {
-                    fillLine.fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
-                                (int)(theLowest.x + theLowestMediumSkalar * i),
-                                i + theLowest.y,
-                                ref Whitheboard, c);
-
-                }
-            }
-            if (MediumTheHighests_Highte != 0 && TheLowestTheHighests_Highte != 0)
-            {
-                for (int i = theLowestMedium_Highte; i <= TheLowestTheHighests_Highte; i++)
-                {
-                    fillLine.fillLine((int)(theLowest.x + theLowestTheHighestSkalar * i),
-                                (int)(medium.x + MediumTheHighestsSkalar * (i - theLowestMedium_Highte)),
-                                i + theLowest.y,
-                                ref Whitheboard, c);
-                }
-            }
-
-        }
-
+        
         private void countPosition()
         {
-            x1 = a.x_parm_on_bitmap; y1 = a.y_parm_on_bitmap;
-            x2 = b.x_parm_on_bitmap; y2 = b.y_parm_on_bitmap;
-            x3 = c.x_parm_on_bitmap; y3 = c.y_parm_on_bitmap;
+            x1 = a.x_parm_on_bitmap; y1 = a.y_parm_on_bitmap; z1 = a.z_parm_on_bitmap;
+            x2 = b.x_parm_on_bitmap; y2 = b.y_parm_on_bitmap; z2 = b.z_parm_on_bitmap;
+            x3 = c.x_parm_on_bitmap; y3 = c.y_parm_on_bitmap; z3 = c.z_parm_on_bitmap;
+
         }
 
         public float3 normalVector =>  MatrixTransformationNeededTo3DModeling.cross_product(
@@ -111,15 +45,13 @@ namespace gk4._3DApi.Components.Objects.Components
                 c.visableCoordinates - a.visableCoordinates
                 );
 
-        public void drawMe(Color LineColor, ref Bitmap Whitheboard, FillLine fillLine)
+        public void drawMe(Color LineColor, ref Bitmap Whitheboard, FillTrialangle fillLine)
         {
             countPosition();
             if (normalVector.z > 0)
             {
-                fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B), fillLine);
-                drawing_lines.drawe(x1, y1, x2, y2, LineColor, ref Whitheboard);
-                drawing_lines.drawe(x2, y2, x3, y3, LineColor, ref Whitheboard);
-                drawing_lines.drawe(x3, y3, x1, y1, LineColor, ref Whitheboard);
+                fillLine.fill_me(ref Whitheboard, Color.FromArgb(255 - LineColor.R, 255 - LineColor.G, 255 - LineColor.B), LineColor);
+                
             }
         }
 

@@ -29,7 +29,7 @@ namespace gk4._3DApi
 
 
         private float3 Transformation;
-        private FillLine FillLine = new FillLine();
+        private FillTrialangle FillLine = new FillTrialangle();
         private CameraPointer CameraPointer = new CameraPointer();
         public Camera Camera
         {
@@ -48,6 +48,16 @@ namespace gk4._3DApi
 
         private objectType objectType = objectType.Figure;
 
+        public ShadingOption Shading
+        {
+            set
+            {
+                foreach(var figure in Figures)
+                    figure.Shading = value;
+                foreach (var lighte in Lights)
+                    lighte.Shading = ShadingOption.None;
+            }
+        }
 
         public Bitmaps_intermediary(Bitmap w, PictureBox pb)
         {

@@ -44,51 +44,71 @@ namespace gk4
             Api3D.Create_New_Figure();
             {
                 Api3D.Transform(0, 1, 0);
-                int i = Api3D.Sphere(0.6f, 6, 5);
+                int i = Api3D.Sphere(0.6f, 10, 10);
+                Api3D[i].Material = new _3DApi.Components.Objects.Material((0.5f, 0.7f, 0.5f, 0.1f),
+                                                                            (0.8f, 0.4f, 0.3f, 0.5f),
+                                                                            (0.8f, 0.23f, 0.3f, 0.5f),
+                                                                            10);
                 Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
             }
 
-            Api3D.Create_New_Figure();
-            {
-                Api3D.Transform(0, 0, 0);
-                int i = Api3D.Squer(0.5f);
-                Api3D[i].Rotation_Center = (-1, -1f, 0);
-                Api3D[i].LineColor = Color.White;
-                Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
-            }
+            //Api3D.Create_New_Figure();
+            //{
+            //    Api3D.Transform(0, 0, 0);
+            //    int i = Api3D.Squer(0.5f);
+            //    Api3D[i].Rotation_Center = (-1, -1f, 0);
+            //    Api3D[i].LineColor = Color.White;
+            //    Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
+            //}
+
+            //Api3D.Create_New_Figure();
+            //{
+            //    Api3D.Transform(0, 0, 0);
+            //    int i = Api3D.Sphere(1f, 10, 10);
+            //    Api3D[i].Rotation_Center = (-1, -1f, 0);
+            //    Api3D[i].Material = new _3DApi.Components.Objects.Material((0.6f, 0.9f, 0.9f, 0.9f),
+            //                                                                (0.8f, 0.9f, 0.3f, 0.78f),
+            //                                                                (0.9f, 0.19f, 0.1f, 0.12f),
+            //                                                                10);
+            //    Api3D[i].LineColor = Color.Green;
+            //    Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
+            //}
 
             Api3D.Create_New_Figure();
             {
-                Api3D.Transform(0, 0, 0);
-                int i = Api3D.Sphere(1f, 10, 10);
-                Api3D[i].Rotation_Center = (-1, -1f, 0);
-                Api3D[i].LineColor = Color.Green;
-                Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
-            }
-
-            Api3D.Create_New_Figure();
-            {
-                Api3D.Transform(0, 0, 0);
+                Api3D.Transform(0, 2, 0);
                 int i = Api3D.Squer(0.5f);
                 Api3D[i].LineColor = Color.Yellow;
+                Api3D[i].Material = new _3DApi.Components.Objects.Material((0.5f, 0.7f, 0.5f, 0.1f),
+                                                                            (0.8f, 0.4f, 0.3f, 0.5f),
+                                                                            (0.8f, 0.23f, 0.3f, 0.5f),
+                                                                            10);
                 Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
             }
 
-            Api3D.Create_New_Figure();
-            {
-                Api3D.Transform(0.4327f, 0, 0);
-                int i = Api3D.Squer(0.5f);
-                Api3D[i].Rotation_Center = (1, 5, 0);
-                Api3D[i].LineColor = Color.Beige;
-            }
+            //Api3D.Create_New_Figure();
+            //{
+            //    Api3D.Transform(0.4327f, 0, 0);
+            //    int i = Api3D.Squer(0.5f);
+            //    Api3D[i].Rotation_Center = (1, 5, 0);
+            //    Api3D[i].LineColor = Color.Beige;
+            //}
 
             Api3D.Create_New_Lighte();
             {
                 Api3D.Transform(0, 0, 0);
                 int i = Api3D.Sphere(0.5f, 4,4);
-                Api3D.GetLighte(i).SetVarbles(1, 0.09f, 0.032f, (1f, 0.5f, 0.2f, 1f), (1f, 0.5f, 0.2f, 1f), (1f, 0.6f, 0.6f, 1f));
+                Api3D.GetLighte(i).SetVarbles(0.6f, 0.09f, 0.032f, (1f, 0.5f, 0.2f, 1f), (1f, 0.5f, 0.2f, 1f), (1f, 0.6f, 0.6f, 1f));
                 Api3D.GetLighte(i).LineColor = Color.Red;
             }
+
+            //Api3D.Create_New_Lighte();
+            //{
+            //    Api3D.Transform(1, 1, -1);
+            //    int i = Api3D.Sphere(0.5f, 10, 4);
+            //    Api3D.GetLighte(i).SetVarbles(1, 0.09f, 0.032f, (1f, 0.8f, 0.2f, 1f), (0.3f, 0.5f, 0.2f, 1f), (0.7f, 0.9f, 0.6f, 0.5f));
+            //    Api3D.GetLighte(i).LineColor = Color.Green;
+            //}
 
             Api3D.drawAll();
         }
@@ -108,7 +128,6 @@ namespace gk4
             int d = 100;
             Api3D.rotate_x(2 * MathF.PI / d);
             Api3D.rotate_y(MathF.PI / d);
-            Api3D[0].Rotation_Center = ((float)direction / 2, -(float)direction / 3, (float)direction);
             Api3D[0].rotate_y(MathF.PI / d);
             //Api3D[0].Move(-moveTo, moveTo, 0);
             StaringCamera.LookAt = Api3D[0].FigureCenter;
@@ -125,16 +144,39 @@ namespace gk4
         private void CameraButtonStationary_Click(object sender, EventArgs e)
         {
             Api3D.Camera = StationaryCamera;
+            Api3D.drawAll();
         }
 
         private void CameraStaringButton_Click(object sender, EventArgs e)
         {
             Api3D.Camera = StaringCamera;
+            Api3D.drawAll();
         }
 
         private void CameraFolowingButton_Click(object sender, EventArgs e)
         {
             Api3D.Camera = FolowingCamera;
+            Api3D.drawAll();
+        }
+
+        private void ConstantShadingButton_Click(object sender, EventArgs e)
+        {
+            Api3D.Shading = _3DApi.Components.Objects.ShadingOption.Constant;
+        }
+
+        private void NoneShadingButton_Click(object sender, EventArgs e)
+        {
+            Api3D.Shading = _3DApi.Components.Objects.ShadingOption.None;
+        }
+
+        private void GouraudShadingButton_Click(object sender, EventArgs e)
+        {
+            Api3D.Shading = _3DApi.Components.Objects.ShadingOption.Gouraud;
+        }
+
+        private void PhongShadingButton_Click(object sender, EventArgs e)
+        {
+            Api3D.Shading = _3DApi.Components.Objects.ShadingOption.Phonge;
         }
 
         private void button1_Click(object sender, EventArgs e)

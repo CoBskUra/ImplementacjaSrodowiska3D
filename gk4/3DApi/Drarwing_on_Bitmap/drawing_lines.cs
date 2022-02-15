@@ -6,15 +6,17 @@ namespace gk4._3DApi.Drarwing
     public static class drawing_lines
     {
 
-        public static int PitagorasEquation(Point a, Point b)
+        public static double PitagorasEquation(Point a, Point b)
         {
-            return (int)(Math.Pow(a.X - b.X, 2)+ Math.Pow(a.Y - b.Y, 2));
+            return Math.Sqrt((Math.Pow(a.X - b.X, 2)+ Math.Pow(a.Y - b.Y, 2)));
 
         }
+
+
         
 
-        public static void all_in(Point first, Point last, Color c, Bitmap whiteboard,
-                                    int d, int incr1, int incr2, int add_to_x1, int add_to_y1, int add_to_x2, int add_to_y2)
+        public static void all_in(Point first, Point last, Bitmap whiteboard,
+                                    int d, int incr1, int incr2, int add_to_x1, int add_to_y1, int add_to_x2, int add_to_y2, Color c1)
         {
             int x1 = first.X;
             int y1 = first.Y;
@@ -25,7 +27,7 @@ namespace gk4._3DApi.Drarwing
             int x = x1;
             int y = y1;
             if(x>0 && x<whiteboard.Width && y>0 && y<whiteboard.Height)
-                whiteboard.SetPixel(x, y, c);
+                whiteboard.SetPixel(x, y, c1);
             while (x < x2 || y != y2)
             {
                 if (d < 0) //choose S 
@@ -41,13 +43,66 @@ namespace gk4._3DApi.Drarwing
                     y = y + add_to_y2;
                 }
                 if (x > 0 && x < whiteboard.Width && y > 0 && y < whiteboard.Height)
-                    whiteboard.SetPixel(x, y, c);
+                    whiteboard.SetPixel(x, y, c1);
                 
             }
         }
 
+        public static void all_in(Point first, Point last, Bitmap whiteboard,
+                                    int d, int incr1, int incr2, int add_to_x1, int add_to_y1, int add_to_x2, int add_to_y2, Color c1, Color c2)
+        {
+            int x1 = first.X;
+            int y1 = first.Y;
+            int x2 = last.X;
+            int y2 = last.Y;
+            double lenght = PitagorasEquation(new Point(x1,y1), new Point(x2, y2));
+            
 
-        public static void drawe(int x1, int y1, int x2, int y2, Color c, ref Bitmap whiteboard)
+            int x = x1;
+            int y = y1;
+            if (x > 0 && x < whiteboard.Width && y > 0 && y < whiteboard.Height)
+                whiteboard.SetPixel(x, y, c1);
+            while (x < x2 || y != y2)
+            {
+                if (d < 0) //choose S 
+                {
+                    d += incr1;
+                    y = y + add_to_y1;
+                    x = x + add_to_x1;
+                }
+                else //choose SE
+                {
+                    d += incr2;
+                    x = x + add_to_x2;
+                    y = y + add_to_y2;
+                }
+                if (x > 0 && x < whiteboard.Width && y > 0 && y < whiteboard.Height)
+                {
+                    double q = PitagorasEquation(new Point(x1, y1), new Point(x, y)) / lenght;
+                    q = q > 1 ? 1 : q;
+                    whiteboard.SetPixel(x, y, ColorInterpolation(c1, c2, q));
+                }
+            }
+        }
+
+        
+
+        public static Color ColorInterpolation(Color c1, Color c2, double q )
+        {
+            return Color.FromArgb(
+                Interpolation(c1.A, c2.A, q),
+                Interpolation(c1.R, c2.R, q),
+                Interpolation(c1.G, c2.G, q),
+                Interpolation(c1.B, c2.B, q)
+                );
+        }
+
+        private static int Interpolation(int a, int b, double q)
+        {
+            return (int)(a * (1 - q) + b * q);
+        }
+
+        public static void drawe(int x1, int y1, int x2, int y2, ref Bitmap whiteboard, Color c1, Color? c2 = null)
         {
 
 
@@ -59,6 +114,12 @@ namespace gk4._3DApi.Drarwing
                 tem = y1;
                 y1 = y2;
                 y2 = tem;
+                if(c2 != null)
+                {
+                    var tmp = c1;
+                    c1 = (Color)c2;
+                    c2 = c1;
+                }
             }
 
 
@@ -114,11 +175,15 @@ namespace gk4._3DApi.Drarwing
                 }
             }
 
-            all_in(new Point(x1, y1), new Point(x2, y2), c, whiteboard,
-                                    d, incr1, incr2, add_to_x1, add_to_y1, add_to_x2, add_to_y2);
+            if(c2 == null)
+                all_in(new Point(x1, y1), new Point(x2, y2), whiteboard,
+                                    d, incr1, incr2, add_to_x1, add_to_y1, add_to_x2, add_to_y2, c1);
+            else
+                all_in(new Point(x1, y1), new Point(x2, y2), whiteboard,
+                                    d, incr1, incr2, add_to_x1, add_to_y1, add_to_x2, add_to_y2, c1, (Color)c2);
 
 
-           
+
         }
     }
 }

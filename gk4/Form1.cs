@@ -97,7 +97,7 @@ namespace gk4
                 int i = Api3D.Sphere(0.3f, 6, 7);
                 Api3D[i].LineColor = Color.Khaki.negation();
                 StaringCamera.LookAt = Api3D[i].FigureCenter;
-                Api3D[i].Material = new _3DApi.Components.Objects.Material(Color.Khaki.ConvertTofloat3(), Color.Khaki.ConvertTofloat3(), Color.Khaki.ConvertTofloat3(), 4);
+                Api3D[i].Material = new _3DApi.Components.Objects.Material(Color.Khaki.ConvertTofloat3(), Color.Khaki.ConvertTofloat3(), Color.Khaki.ConvertTofloat3(), 5);
             }
 
             Api3D.Create_New_Figure();
@@ -118,7 +118,7 @@ namespace gk4
                 int i = Api3D.Sphere(0.5f, 6, 7);
                 Api3D.GetLighte(i).LineColor = Color.DarkCyan;
 
-                Api3D.GetLighte(i).SetVarbles(0.6f, 0.2f, 0.032f, Color.DarkCyan.negation().ConvertTofloat3(), (1f, 1f, 1f), (1f, 1f, 1f));
+                Api3D.GetLighte(i).SetVarbles(0.06f, 0.02f, 0.032f, Color.DarkCyan.negation().ConvertTofloat3(), (1f, 1f, 1f), (1f, 1f, 1f));
 
                 StaringCamera.LookAt = Api3D[i].FigureCenter;
             }
@@ -135,7 +135,7 @@ namespace gk4
             {
                 Api3D.Transform(2, 3.5f, 0);
                 int i = Api3D.Sphere(0.5f, 4, 4);
-                Api3D.GetLighte(i).SetVarbles(0.6f, 0.2f, 0.032f, Color.Yellow.ConvertTofloat3(), (1f, 0.5f, 0.2f), (0.5f, 0.6f, 0.6f));
+                Api3D.GetLighte(i).SetVarbles(0.3f, 0.2f, 0.032f, Color.Yellow.ConvertTofloat3(), (1f, 1f, 0.2f), (0.5f, 1f, 0.6f));
                 Api3D.GetLighte(i).LineColor = Color.Yellow.negation();
             }
 
@@ -144,7 +144,7 @@ namespace gk4
             {
                 Api3D.Transform(-2, 1f, 0);
                 int i = Api3D.Squer(0.2f);
-                Api3D.GetLighte(i).SetVarbles(1f, 0.2f, 0.032f, Color.Orange.ConvertTofloat3(), (0.1f, 0.5f, 0.2f), (0.5f, 0.6f, 0.6f));
+                Api3D.GetLighte(i).SetVarbles(1f, 0.03f, 0.032f, Color.Red.ConvertTofloat3(), (1f, 1f, 0.2f), (0.5f, 1f, 0.6f));
                 Api3D.GetLighte(i).LineColor = Color.Red.negation();
                 Api3D.GetLighte(i).Rotation_Center = (-1, 1, 0);
             }
@@ -174,12 +174,11 @@ namespace gk4
             StaringCamera.LookAt = Api3D[2].FigureCenter;
             float3 oldPosition = Api3D[2].FigureCenter;
             Api3D[2].Move(skalar.x, skalar.y, skalar.z);
-            Api3D.drawAll();
+            
             Api3D[2].rotate_x(MathF.PI / 100);
             Api3D[2].rotate_z(MathF.PI / 10);
-            Api3D[6].rotate_y(MathF.PI / 10);
-
-
+            Api3D[6].Move(MathF.Sin((i)*MathF.PI/20)/5, 0, MathF.Cos((-i) * MathF.PI / 40)/5);
+            this.Text = Api3D[6].FigureCenter.ToString();
 
             //this.Text = Api3D[0].FigureCenter.ToString();
             Api3D.drawAll();

@@ -10,12 +10,12 @@ namespace gk4._3DApi.Components.Objects
 {
     public class Light:Figure
     {
-        public float Ac;
-        public float Al;
-        public float Aq;
-        public float3 ambient;
-        public float3 diffuse;
-        public float3 specular;
+        public float Ac = 0.1f;
+        public float Al = 0.6f;
+        public float Aq = 0.032f;
+        public float3 ambient = (0, 0, 0);
+        public float3 diffuse = (0, 0, 0);
+        public float3 specular = (0, 0, 0);
 
         public void SetVarbles(float Ac, float Al, float Aq, float3 ambient, float3 diffuse, float3 specular)
         {

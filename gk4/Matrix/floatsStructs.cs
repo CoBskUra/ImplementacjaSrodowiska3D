@@ -87,7 +87,12 @@ namespace gk4.Matrix
             return new float3(f3[0, 0], f3[1, 0], f3[2, 0]);
         }
 
-
+        public void normalize()
+        {
+            Matrix<float> tmp = this;
+            tmp.Normalization_3x1();
+            this = tmp;
+        }
 
     }
 
@@ -163,6 +168,8 @@ namespace gk4.Matrix
     {
         public static float Cos(float3 a, float3 b)
         {
+            a.normalize();
+            b.normalize();
             return a.x * b.x + a.y * b.y + a.z * b.z;
         }
     }

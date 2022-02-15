@@ -19,9 +19,6 @@ namespace gk4._3DApi.Components.Objects.Components
                         CameraPointer c)
         {
             this.coordinates = coordinates;
-            this.normal_vector = normalvector;
-            this.tangentialVector = tangentialVector;
-            this.binormal = binormal;
             max_z = mz;
             max_y = my;
             max_x = mx;
@@ -53,15 +50,9 @@ namespace gk4._3DApi.Components.Objects.Components
         // obecny środek
         public float3 CurenntFigureCenter;
 
-        // wektor normalny
-        private float3 normal_vector, tangentialVector, binormal;
-
-
         // środek figury 
         private float3 RotationCenter;
 
-        // czy dany punkt znajduje się w widzialnej przestrzeni
-        public bool visable => !(x_parm_on_bitmap < 0 || y_parm_on_bitmap < 0);
 
 
         // w jakim miejsu na bitmapie musie pojawić się x by była iluzja 3d
@@ -84,7 +75,6 @@ namespace gk4._3DApi.Components.Objects.Components
 
                 var vector = CoordinateMulipleByProjViewModel();
                 return (int)(max_x * (1 + vector[0, 0]) / 2);
-
             }
         }
 
@@ -111,6 +101,7 @@ namespace gk4._3DApi.Components.Objects.Components
             WorldCoordinates.y = vector[1, 0];
             WorldCoordinates.z = vector[2, 0];
 
+
             vector = Camera.Proj * vector;
             vector /= vector[3, 0];
 
@@ -118,36 +109,10 @@ namespace gk4._3DApi.Components.Objects.Components
             visableCoordinates.y = vector[1, 0];
             visableCoordinates.z = vector[2, 0];
 
+
             return vector;
         }
-
-        public float3 NormalVector
-        {
-            get
-            {
-                Matrix<float> tmp = new Matrix<float>(4, 1);
-
-                tmp.m[0, 0] = normal_vector.x + RotationCenter.x;
-                tmp.m[1, 0] = normal_vector.y + RotationCenter.y;
-                tmp.m[2, 0] = normal_vector.z + RotationCenter.z;
-                tmp.m[3, 0] = 0;
-
-                var M = RotationMatrix();
-                tmp = M * tmp;
-                tmp[0, 0] -= RotationCenter.x;
-                tmp[1, 0] -= RotationCenter.y;
-                tmp[2, 0] -= RotationCenter.z;
-
-                
-                //Debug.WriteLine(tmp.ToString());
-
-                return tmp;
-            }
-            set
-            {
-                normal_vector = value;
-            }
-        }
+        
 
 
         public float3 Coordinates
@@ -238,10 +203,7 @@ namespace gk4._3DApi.Components.Objects.Components
                 tmp[1, 0] -= RotationCenter.y;
                 tmp[2, 0] -= RotationCenter.z;
 
-                CurenntFigureCenter.x = tmp[0, 0] + FigureCenter.x - coordinates.x;
-                CurenntFigureCenter.y = tmp[1, 0] + FigureCenter.y - coordinates.y;
-                CurenntFigureCenter.z = tmp[2, 0] + FigureCenter.z - coordinates.z;
-
+                //Coordinates = tmp;
                 //Debug.WriteLine(CurenntFigureCenter.ToString() + '\n' + FigureCenter + '\n');
 
                 return tmp;
@@ -274,34 +236,8 @@ namespace gk4._3DApi.Components.Objects.Components
 
         }
 
-        public Matrix<float> reverseMatrixRotation()
-        {
-            Matrix<float> M = new Matrix<float> (4, 4);
-            M.ReduceToDiagonal();
-            M.reverse_rotate_z(Rads.x);
-            M.reverse_rotate_y(Rads.y);
-            M.reverse_rotate_x(Rads.z);
-            Matrix<float> P = new Matrix<float>(4, 4);
-            P[0, 0] = 1;
-            P[1, 1] = 1;
-            P[2, 2] = 1;
-            P[3, 3] = 1;
-            Matrix<float> T = new Matrix<float>(4, 4);
-            T[0, 0] = 1;
-            T[1, 1] = 1;
-            T[2, 2] = 1;
-            T[3, 3] = 1;
-            T[0, 3] = -1;
-            T[1, 3] = -1;
-            T[2, 3] = -1;
-
-            M = M * T * P;
-            
-            M.Transform();
-
-            return M;
-
-        }
+        
+        
 
 
 

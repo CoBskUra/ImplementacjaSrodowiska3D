@@ -405,15 +405,12 @@ namespace gk4._3DApi.Drarwing
 
             foreach (var light in lights)
             {
-                float3 vectorFromPixelToLighte = (float3)(light.FigureCenter - pixelLokation);
+                float3 vectorFromPixelToLighte = light.FigureCenter - pixelLokation;
                 float dist = this.dis(vectorFromPixelToLighte);
-                Matrix<float> tmp = vectorFromPixelToLighte;
-                tmp.Normalization_3x1();
-                vectorFromPixelToLighte = tmp;
-                float3 VersorNormalny = (float3)(trialagleToFill.normalVector);
+                float3 VersorNormalny = trialagleToFill.normalVector;
                 float3 diffuse = Material.diffuse * floats.Cos(vectorFromPixelToLighte, VersorNormalny) * light.diffuse;
 
-                fromPixelToViver = (float3)(cameraPointer.Camera.Position - pixelLokation);
+                fromPixelToViver = cameraPointer.Camera.Position - pixelLokation;
                 float3 R = VersorNormalny * 2 * floats.Cos(vectorFromPixelToLighte, VersorNormalny) - vectorFromPixelToLighte;
                 float3 specular = Material.specular * light.specular * MathF.Pow(floats.Cos(R, fromPixelToViver), Material.shininess);
 
@@ -432,7 +429,7 @@ namespace gk4._3DApi.Drarwing
         private Color ConvertToColor(float3 ColorInFloat, float dis)
         {
             // Mgła
-            ColorInFloat *= MathF.Exp(-MathF.Pow((dis * 0.2f),2));
+            ColorInFloat *= MathF.Exp(-MathF.Pow((dis * 0.1f),2));
 
             ColorInFloat *= 255;
             ColorInFloat.x = ColorInFloat.x > 255 ? 255 : ColorInFloat.x;

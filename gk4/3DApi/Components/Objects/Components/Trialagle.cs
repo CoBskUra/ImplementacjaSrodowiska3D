@@ -20,14 +20,7 @@ namespace gk4._3DApi.Components.Objects.Components
             this.c = c;
         }
 
-        public Trialagle(Point3 a, Point3 b, Point3 c, float3 normalvector): this(a, b,c)
-        {
-
-            //a.NormalVector = normalvector;
-            //b.NormalVector = normalvector;
-            //c.NormalVector = normalvector;
-
-        }
+        
         
 
 

@@ -41,16 +41,7 @@ namespace gk4
 
 
 
-            //Api3D.Create_New_Figure();
-            //{
-            //    Api3D.Transform(0, 1, 0);
-            //    int i = Api3D.Sphere(0.6f, 10, 10);
-            //    Api3D[i].Material = new _3DApi.Components.Objects.Material((0.5f, 0.7f, 0.5f),
-            //                                                                (0.8f, 0.4f, 0.3f),
-            //                                                                (0.8f, 0.23f, 0.3f),
-            //                                                                10);
-            //    Api3D[i].Shading = _3DApi.Components.Objects.ShadingOption.Constant;
-            //}
+            
 
             Api3D.Create_New_Figure();
             {
@@ -155,7 +146,6 @@ namespace gk4
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            float moveTo = 0.01f* direction;
             
             i += direction;
             if (i == 40)
@@ -167,10 +157,6 @@ namespace gk4
                 direction = 1;
             }
             float3 skalar = vector / 40 * direction;
-            int d = 100;
-            //Api3D.rotate_x(2 * MathF.PI / d);
-            //Api3D.rotate_y(MathF.PI / d);
-            //Api3D[0].rotate_y(MathF.PI / d);
             StaringCamera.LookAt = Api3D[2].FigureCenter;
             float3 oldPosition = Api3D[2].FigureCenter;
             Api3D[2].Move(skalar.x, skalar.y, skalar.z);
@@ -178,9 +164,7 @@ namespace gk4
             Api3D[2].rotate_x(MathF.PI / 100);
             Api3D[2].rotate_z(MathF.PI / 10);
             Api3D[6].Move(MathF.Sin((i)*MathF.PI/20)/5, 0, MathF.Cos((-i) * MathF.PI / 40)/5);
-            this.Text = Api3D[6].FigureCenter.ToString();
 
-            //this.Text = Api3D[0].FigureCenter.ToString();
             Api3D.drawAll();
 
             FolowingCamera.Position -= Api3D[2].FigureCenter - oldPosition;

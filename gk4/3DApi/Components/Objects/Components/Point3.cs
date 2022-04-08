@@ -203,8 +203,6 @@ namespace gk4._3DApi.Components.Objects.Components
                 tmp[1, 0] -= RotationCenter.y;
                 tmp[2, 0] -= RotationCenter.z;
 
-                //Coordinates = tmp;
-                //Debug.WriteLine(CurenntFigureCenter.ToString() + '\n' + FigureCenter + '\n');
 
                 return tmp;
             }

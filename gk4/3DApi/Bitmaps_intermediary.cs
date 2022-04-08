@@ -129,10 +129,8 @@ namespace gk4._3DApi
         // tworzy prostokąt by za każdym razem nie pisać parametrów widzialmości
         public void Add_Trialagle(Point3 a, Point3 b, Point3 c, float3? normalvector = null)
         {
-            if (normalvector == null)
-                Add(new Trialagle(a, b, c));
-            else
-                Add(new Trialagle(a, b, c, (float3)normalvector));
+            Add(new Trialagle(a, b, c));
+            
         }
 
         // rysuje wybraną figure

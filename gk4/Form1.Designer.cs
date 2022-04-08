@@ -179,7 +179,7 @@ namespace gk4
             this.Controls.Add(this.StartStop_Button);
             this.Controls.Add(this.whitheboardBox);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "3D";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.whitheboardBox)).EndInit();
             this.Cameras.ResumeLayout(false);
